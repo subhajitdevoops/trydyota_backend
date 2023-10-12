@@ -50,7 +50,7 @@ const getShowingProducts = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   const { title, category, price, page, limit } = req.query;
-  //  console.log('title',title)
+   console.log('title')
   let queryObject = {};
   let sortObject = {};
   if (title) {
