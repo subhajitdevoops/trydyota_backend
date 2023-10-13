@@ -13,7 +13,9 @@ const addProduct = async (req, res) => {
     });
 
     await newProduct.save();
-    res.send(newProduct);
+    res.status(200).send({
+      message: "Product Added successfully!",
+    });
   } catch (err) {
     res.status(500).send({
       message: err.message,
