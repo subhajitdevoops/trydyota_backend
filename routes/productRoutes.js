@@ -14,12 +14,14 @@ const {
   deleteManyProducts,
   getShowingStoreProducts,
 } = require("../controller/productController");
+const {isAdmin,checkLogin} = require("../helper/login");
+
 
 //add a product
-router.post("/add", addProduct);
+router.post("/add",isAdmin,checkLogin,addProduct);
 
 //add multiple products
-router.post("/all", addAllProducts);
+router.post("/all",isAdmin,checkLogin, addAllProducts);
 
 //get a product
 router.post("/:id", getProductById);

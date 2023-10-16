@@ -13,13 +13,14 @@ const productSchema = new mongoose.Schema(
     barcode: {
       type: String,
       required: false,
+      default:null,
     },
     title: {
-      type: Object,
+      type: String,
       required: true,
     },
     description: {
-      type: Object,
+      type: String,
       required: false,
     },
     slug: {
@@ -45,6 +46,18 @@ const productSchema = new mongoose.Schema(
     stock: {
       type: Number,
       required: false,
+    },
+    tax: [{
+      type: Number,
+      required: true,
+    }],
+    warrantyPeriods: {
+      type: Number,
+      unit: {
+        type: String,
+        enum: ['months','years','days'],
+      },
+      required: true,
     },
     quantity: {
       type: Number,
@@ -74,12 +87,23 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-
     status: {
       type: String,
-      default: "show",
-      enum: ["show", "hide"],
+      default: "activate",
+      enum: ["activate", "deactivate"],
     },
+    userManual: [{
+      type: String,
+      required: false,
+    }],
+    technicalSpecification: [{
+      type: String,
+      required: false,
+    }],
+    testCertification: [{
+      type: String,
+      required: false,
+    }],
   },
   {
     timestamps: true,
