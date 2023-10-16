@@ -28,11 +28,13 @@ const addAllProducts = async (req, res) => {
     // console.log('product data',req.body)
     // await Product.deleteMany();
     var response=await Product.insertMany(req.body);
-    res.send({
+    res.status(200).send({
       status:200,
       message: "Product Added successfully!",
+      response,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).send({
       message: err.message,
       err

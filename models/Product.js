@@ -58,12 +58,18 @@ const productSchema = new mongoose.Schema(
       required: true,
     }],
     warrantyPeriods: {
-      duration:{type: Number,required: true,},
-      unit: {
-        type: String,
-        enum: ['months','years','days'],
-        required: true,
+      type: {
+        duration: {
+          type: Number,
+          required: true,
+        },
+        unit: {
+          type: String,
+          enum: ['months', 'years', 'days'],
+          required: true,
+        },
       },
+      required: true,
     },
     quantity: {
       type: Number,
@@ -98,24 +104,30 @@ const productSchema = new mongoose.Schema(
       default: "activate",
       enum: ["activate", "deactivate"],
     },
-    userManual: [{
-      medialink: {
-        type: String,
-        required: false
-      }
-    }],
-    technicalSpecification: [{
-      medialink: {
-        type: String,
-        required: false
-      }
-    }],
-    testCertification: [{
-      medialink: {
-        type: String,
-        required: false
-      }
-    }],
+    userManual: [
+      {
+        medialink: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
+    technicalSpecification: [
+      {
+        medialink: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
+    testCertification: [
+      {
+        medialink: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
