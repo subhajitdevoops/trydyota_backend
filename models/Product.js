@@ -21,11 +21,11 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: false,
+      required: true,
     },
     slug: {
       type: String,
-      required: true,
+      required: false,
     },
     categories: [
       {
@@ -39,10 +39,16 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    image: {
-      type: Array,
-      required: false,
-    },
+    image: [{
+      medialink: {
+        type: String,
+        required: true
+      },
+      defaultOrNot: {
+        type: Boolean,
+        required: true
+      }
+    }],
     stock: {
       type: Number,
       required: false,
@@ -52,12 +58,12 @@ const productSchema = new mongoose.Schema(
       required: true,
     }],
     warrantyPeriods: {
-      type: Number,
+      duration:{type: Number,required: true,},
       unit: {
         type: String,
         enum: ['months','years','days'],
+        required: true,
       },
-      required: true,
     },
     quantity: {
       type: Number,
@@ -79,7 +85,7 @@ const productSchema = new mongoose.Schema(
       },
       discount: {
         type: Number,
-        required: false,
+        required: true,
       },
     },
     variants: [{}],
@@ -93,16 +99,22 @@ const productSchema = new mongoose.Schema(
       enum: ["activate", "deactivate"],
     },
     userManual: [{
-      type: String,
-      required: false,
+      medialink: {
+        type: String,
+        required: false
+      }
     }],
     technicalSpecification: [{
-      type: String,
-      required: false,
+      medialink: {
+        type: String,
+        required: false
+      }
     }],
     testCertification: [{
-      type: String,
-      required: false,
+      medialink: {
+        type: String,
+        required: false
+      }
     }],
   },
   {
