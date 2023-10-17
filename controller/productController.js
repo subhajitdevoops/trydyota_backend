@@ -61,11 +61,11 @@ const getAllProducts = async (req, res) => {
   let sortObject = {};
   if (title) {
     queryObject.$or = [
-      { "title.en": { $regex: `${title}`, $options: "i" } },
-      { "title.de": { $regex: `${title}`, $options: "i" } },
-      { "title.es": { $regex: `${title}`, $options: "i" } },
-      { "title.bn": { $regex: `${title}`, $options: "i" } },
-      { "title.sl": { $regex: `${title}`, $options: "i" } },
+      { "title": { $regex: `${title}`, $options: "i" } },
+      { "title": { $regex: `${title}`, $options: "i" } },
+      { "title": { $regex: `${title}`, $options: "i" } },
+      { "title": { $regex: `${title}`, $options: "i" } },
+      { "title": { $regex: `${title}`, $options: "i" } },
     ];
   }
 
