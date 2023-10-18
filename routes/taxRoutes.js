@@ -7,14 +7,16 @@ const {
   deleteTax
 } = require('../controller/taxController');
 
+const {isAdmin,checkLogin} = require("../helper/login");
 
-router.get('/', getTax);
 
-router.post('/', addTax);
+router.get('/',checkLogin,isAdmin, getTax);
 
-router.get('/taxbyid', getTaxById);
+router.post('/',checkLogin,isAdmin, addTax);
 
-router.post('/deletetax', deleteTax);
+router.get('/taxbyid',checkLogin,isAdmin, getTaxById);
+
+router.post('/deletetax',checkLogin,isAdmin, deleteTax);
 
 
 
