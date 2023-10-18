@@ -24,6 +24,7 @@ const getTaxById = async (req, res) => {
       const taxDetails = await Tax.findOne({_id:data.id});
       if(taxDetails!=null){
         res.status(200).send({
+        success:true,
         message:"Sucessfully fetch!",
         taxDetails
         })
