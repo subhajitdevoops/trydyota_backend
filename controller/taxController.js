@@ -20,7 +20,7 @@ const getTax = async (req, res) => {
 
 const getTaxById = async (req, res) => {
     try {
-      const data=req.body;
+      const data=req.query;
       const taxDetails = await Tax.findOne({_id:data.id});
       if(taxDetails!=null){
         res.status(200).send({
@@ -76,7 +76,7 @@ const addTax = async (req, res) => {
 
 const deleteTax = async (req, res) => {
   try {
-      const data=req.body;
+      const data=req.query;
      
         var result= await Tax.deleteOne({_id:data.id}).exec();
         res.send({
