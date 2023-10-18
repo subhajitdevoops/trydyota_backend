@@ -9,14 +9,15 @@ const tax = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      default: "Percentage",
+      default: "percentage",
       enum: [
-        "Percentage",
+        "percentage",
         "flatin",
       ],
     },
     ammount: {
         type: Number,
+        currencySymbol:String,
         required: true,
       },
   },
