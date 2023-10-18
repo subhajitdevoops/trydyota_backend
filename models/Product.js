@@ -101,8 +101,8 @@ const productSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "activate",
-      enum: ["activate", "deactivate"],
+      default: "show",
+      enum: ["show", "hide"],
     },
     userManual: [
       {
