@@ -6,6 +6,7 @@ const getTax = async (req, res) => {
     try {
       const taxDetails = await Tax.find();
       res.status(200).send({
+        success:true,
         message:"Sucessfully fetch!",
         taxDetails
       })
