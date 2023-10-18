@@ -81,11 +81,11 @@ const productSchema = new mongoose.Schema(
     },
     tag: [String],
     prices: {
-      originalPrice: {
+      price: {
         type: Number,
         required: true,
       },
-      price: {
+      salePrice: {
         type: Number,
         required: true,
       },
