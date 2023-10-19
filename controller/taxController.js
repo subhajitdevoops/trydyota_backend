@@ -49,7 +49,7 @@ const addTax = async (req, res) => {
         const data=req.body;
         if(data.id){
            var result= await Tax.updateOne({ _id:data.id},{...data}).exec();
-            callback({
+            res.send({
                success: true, 
                message: "Sucessfully Updated!!!", 
                result
