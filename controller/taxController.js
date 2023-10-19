@@ -76,9 +76,10 @@ const addTax = async (req, res) => {
 
 const deleteTax = async (req, res) => {
   try {
-      const data=req.query;
+      const data=req.body;
      
         var result= await Tax.deleteOne({_id:data.id}).exec();
+        console.log(result);
         res.send({
              status:200,
              success: true, 
