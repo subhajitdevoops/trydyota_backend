@@ -29,13 +29,14 @@ const addAllProducts = async (req, res) => {
     // await Product.deleteMany();
     var response=await Product.insertMany(req.body);
     res.status(200).send({
-      status:200,
+      sucess:true,
       message: "Product Added successfully!",
       response,
     });
   } catch (err) {
     console.log(err);
     res.status(500).send({
+      sucess:false,
       message: err.message,
       err
     });
