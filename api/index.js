@@ -18,6 +18,8 @@ const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const taxRoutes = require("../routes/taxRoutes");
+const homepageRoutes = require("../routes/homepageRoutes");
+
 
 const { isAuth, isAdmin } = require("../config/auth");
 
@@ -50,6 +52,7 @@ app.use("/api/setting/", settingRoutes);
 app.use("/api/currency/", isAuth, currencyRoutes);
 app.use("/api/language/", languageRoutes);
 app.use("/api/tax/", taxRoutes);
+app.use("/api/homepage/", homepageRoutes);
 
 
 //if you not use admin dashboard then these two route will not needed.
