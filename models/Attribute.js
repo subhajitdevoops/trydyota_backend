@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const attributeSchema = new mongoose.Schema(
   {
     title: {
-      type: Object,
+      type: String,
       required: true,
     },
     name: {
-      type: Object,
+      type: String,
       required: true,
     },
     variants: [
       {
         name: {
-          type: Object,
+          type: String,
           required: false,
         },
         status: {
