@@ -23,12 +23,14 @@ const addAllCategory = async (req, res) => {
     await Category.insertMany(req.body);
 
     res.status(200).send({
+      success:true,
       message: "Category Added Successfully!",
     });
   } catch (err) {
     console.log(err.message);
 
     res.status(500).send({
+      success:false,
       message: err.message,
     });
   }

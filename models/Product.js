@@ -57,6 +57,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     }],
+    taxType: [{
+      type: String,
+      required: true,
+    }],
     warrantyPeriods: {
       type: {
         duration: {
