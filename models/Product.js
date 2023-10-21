@@ -54,11 +54,8 @@ const productSchema = new mongoose.Schema(
       required: false,
     },
     tax: [{
-      type: Number,
-      required: true,
-    }],
-    taxType: [{
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tax",
       required: true,
     }],
     warrantyPeriods: {

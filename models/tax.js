@@ -5,6 +5,7 @@ const tax = new mongoose.Schema(
     taxName: {
       type: String,
       required: true,
+      unique:true
     },
     type: {
       type: String,
