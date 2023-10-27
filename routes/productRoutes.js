@@ -32,7 +32,7 @@ router.get("/show", getShowingProducts);
 
 //get showing products in store
 router.get("/store", getShowingStoreProducts);
-
+  
 //get all products
 router.get("/", getAllProducts);
 
@@ -40,7 +40,7 @@ router.get("/", getAllProducts);
 router.get("/product/:slug", getProductBySlug);
 
 //update a product
-router.patch("/:id", updateProduct);
+router.put("/:id", updateProduct);
 
 //update many products
 router.patch("/update/many", updateManyProducts);

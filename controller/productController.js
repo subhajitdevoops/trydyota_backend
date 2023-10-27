@@ -166,12 +166,8 @@ const updateProduct = async (req, res) => {
     // console.log("product", product);
 
     if (product) {
-      product.title = { ...product.title, ...req.body.title };
-      product.description = {
-        ...product.description,
-        ...req.body.description,
-      };
-
+      product.title = req.body.title ;
+      product.description = req.body.description,
       product.productId = req.body.productId;
       product.sku = req.body.sku;
       product.barcode = req.body.barcode;
@@ -185,8 +181,10 @@ const updateProduct = async (req, res) => {
       product.prices = req.body.prices;
       product.image = req.body.image;
       product.tag = req.body.tag;
+      product.tax = req.body.tax;
 
-      await product.save();
+
+      await product.updateOne();
       res.send({ data: product, message: "Product updated successfully!" });
     } else {
       res.status(404).send({
@@ -195,7 +193,7 @@ const updateProduct = async (req, res) => {
     }
   } catch (err) {
     res.status(404).send(err.message);
-    // console.log('err',err)
+    console.log('err',err)
   }
 };
 
