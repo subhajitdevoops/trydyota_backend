@@ -34,26 +34,26 @@ const settingData = require("../utils/settings");
 connectDB();
 const importData = async () => {
   try {
-    await Language.deleteMany();
-    await Language.insertMany(languageData);
+    // await Language.deleteMany();
+    // await Language.insertMany(languageData);
 
     // await Currency.deleteMany();
     // await Currency.insertMany(currencyData);
 
-    await Attribute.deleteMany();
-    await Attribute.insertMany(attributeData);
+    // await Attribute.deleteMany();
+    // await Attribute.insertMany(attributeData);
 
     // await Customer.deleteMany();
     // await Customer.insertMany(customerData);
 
-    await Admin.deleteMany();
-    await Admin.insertMany(adminData);
+    // await Admin.deleteMany();
+    // await Admin.insertMany(adminData);
 
-    await Category.deleteMany();
+   // await Category.deleteMany();
     await Category.insertMany(categoryData);
 
-    await Product.deleteMany();
-    await Product.insertMany(productData);
+    // await Product.deleteMany();
+    // await Product.insertMany(productData);
 
     // await Coupon.deleteMany();
     // await Coupon.insertMany(couponData);
