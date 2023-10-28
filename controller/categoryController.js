@@ -96,19 +96,25 @@ const updateCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
     if (category) {
-      category.name = { ...category.name, ...req.body.name };
-      category.description = {
-        ...category.description,
-        ...req.body.description,
-      };
-      category.icon = req.body.icon;
-      category.status = req.body.status;
-      category.parentId = req.body.parentId
-        ? req.body.parentId
-        : category.parentId;
-      category.parentName = req.body.parentName;
+      // category.name = req.body.name;
+      // category.description = req.body.description;
+    
+      // category.icon = req.body.icon;
+      // category.status = req.body.status;
+      // category.parentId = req.body.parentId
+      //   ? req.body.parentId
+      //   : category.parentId;
+      // category.parentName = req.body.parentName;
+      category.name = req.body.name ? req.body.name : category.name;
+      category.description = req.body.description ? req.body.description : category.description;
+      category.icon = req.body.icon ? req.body.icon : category.icon;
+      category.status = req.body.status ? req.body.status : category.status;
+      category.parentId = req.body.parentId ? req.body.parentId : category.parentId;
+      category.parentName = req.body.parentName ? req.body.parentName : category.parentName;
 
-      await category.save();
+
+      await Category.updateOne({ _id: req.params.id }, { $set: { ...category } });
+
       res.send({ message: "Category Updated Successfully!" });
     }
   } catch (err) {
