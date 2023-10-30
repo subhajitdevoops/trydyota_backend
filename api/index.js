@@ -20,6 +20,7 @@ const languageRoutes = require("../routes/languageRoutes");
 const taxRoutes = require("../routes/taxRoutes");
 const homepageRoutes = require("../routes/homepageRoutes");
 const shippingRoutes = require("../routes/shippingRoutes");
+const brandCatalogRoutes = require("../routes/brandCatalogRoute");
 
 
 const { isAuth, isAdmin } = require("../config/auth");
@@ -55,6 +56,8 @@ app.use("/api/language/", languageRoutes);
 app.use("/api/tax/", taxRoutes);
 app.use("/api/homepage/", homepageRoutes);
 app.use("/api/shipping/", shippingRoutes);
+app.use("/api/brandcatalog/", brandCatalogRoutes);
+
 
 
 
