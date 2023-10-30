@@ -15,14 +15,14 @@ const {
   getShowingStoreProducts,
 } = require("../controller/productController");
 const {isAdmin,checkLogin} = require("../helper/login");
-const validateCategoriesAndTax = require("../helper/validator");
+const {validateCategoriesAndTax,categoriesAndTaxExistOrNot} = require("../helper/validator");
 
 
 //add a product
 router.post("/add",isAdmin,checkLogin,validateCategoriesAndTax,addProduct);
 
 //add multiple products
-router.post("/all",isAdmin,checkLogin, addAllProducts);
+router.post("/all",isAdmin,checkLogin,categoriesAndTaxExistOrNot,addAllProducts);
 
 //get a product
 router.post("/:id", getProductById);

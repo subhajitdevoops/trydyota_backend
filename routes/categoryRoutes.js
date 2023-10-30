@@ -15,6 +15,8 @@ const {
 
 } = require('../controller/categoryController');
 
+
+
 //add a category
 router.post('/add', addCategory);
 
