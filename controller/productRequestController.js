@@ -6,7 +6,6 @@ const getProductRequest = async (req, res) => {
     try {
 
             var data=req.query;
-
             var prevPage;                                        
             var nextPage;
             var hasPrevPage;
@@ -14,11 +13,13 @@ const getProductRequest = async (req, res) => {
 
             var limit = data.limit ? Number(data.limit) : 10;
             var page = data.page ? Number(data.page) : 1;
+            var searchQuery = req.query.searchQuery ? req.query.searchQuery : "";
 
-            const ProductRequestDetailsdData =await ProductRequest.find().skip((page-1)*limit).limit(Number(limit)).exec();
+
+            const ProductRequestDetailsdData =await ProductRequest.find({name:searchQuery}).skip((page-1)*limit).limit(Number(limit)).exec();
             
 
-            var countdata=await ProductRequestDetailsdData.find().exec();
+            var countdata=await ProductRequest.find().exec();
 
             var count=countdata.length;
 

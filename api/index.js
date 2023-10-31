@@ -21,7 +21,7 @@ const taxRoutes = require("../routes/taxRoutes");
 const homepageRoutes = require("../routes/homepageRoutes");
 const shippingRoutes = require("../routes/shippingRoutes");
 const brandCatalogRoutes = require("../routes/brandCatalogRoute");
-
+const productRequestRoutes=require("../routes/productRequestRoutes");
 
 const { isAuth, isAdmin } = require("../config/auth");
 
@@ -57,6 +57,8 @@ app.use("/api/tax/", taxRoutes);
 app.use("/api/homepage/", homepageRoutes);
 app.use("/api/shipping/", shippingRoutes);
 app.use("/api/brandcatalog/", brandCatalogRoutes);
+app.use("/api/productRequest/", productRequestRoutes);
+
 
 
 
