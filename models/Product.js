@@ -72,10 +72,21 @@ const productSchema = new mongoose.Schema(
       },
       required: true,
     },
-    quantity: {
+    minimumOrderOfQuantity: {
       type: Number,
       required: true,
     },
+    moqSlab: [{
+      name: String,
+      minQuantity:Number,
+      maxQuantity:Number,
+      moqSalePrice:Number,
+      typeOfDiscount:{
+        type:String,
+        default:"Quantity wise"
+      },
+      required: false,
+    }],
     sales: {
       type: Number,
       required: false,
