@@ -137,7 +137,7 @@ const addBrandCatalog = async (req, res) => {
 
 const deleteBrandCatalogById = async (req, res) => {
   try {
-      const data=req.body;
+      const data=req.params;
       var result= await brandCatalog.deleteOne({_id:data.id}).exec();
       console.log(result);
       res.send({
