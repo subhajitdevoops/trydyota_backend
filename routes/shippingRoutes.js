@@ -16,7 +16,7 @@ router.post('/',checkLogin,isAdmin, addShippingMethod);
 
 router.get('/shippingmethodbyid',checkLogin,isAdmin, getShippingMethodById);
 
-router.post('/deleteshippingmethod',checkLogin,isAdmin, deleteShippingMethod);
+router.delete('/deleteshippingmethod/:id',checkLogin,isAdmin, deleteShippingMethod);
 
 
 
