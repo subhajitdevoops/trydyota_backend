@@ -16,7 +16,7 @@ router.post('/',checkLogin,isAdmin, addBrandCatalog);
 
 router.get('/getBrandCatalogById',checkLogin,isAdmin, getBrandCatalogById);
 
-router.delete('/deleteBrandCatalogById',checkLogin,isAdmin, deleteBrandCatalogById);
+router.post('/deleteBrandCatalogById',checkLogin,isAdmin, deleteBrandCatalogById);
 
 
 
