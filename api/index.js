@@ -91,7 +91,13 @@ app.use((err, req, res, next) => {
 app.use("/static", express.static("public"));
 
 // Serve the index.html file for all routes
+<<<<<<< HEAD
 
+=======
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+>>>>>>> a9812fb055f32553e6029cf727d282d4c4bd7a6f
 
 const PORT = process.env.PORT || 5000;
 
