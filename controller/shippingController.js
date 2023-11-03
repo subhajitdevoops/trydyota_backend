@@ -137,7 +137,7 @@ const addShippingMethod = async (req, res) => {
 
 const deleteShippingMethod = async (req, res) => {
   try {
-      const data=req.body;
+      const data=req.params;
      
         var result= await Shipping.deleteOne({_id:data.id}).exec();
         console.log(result);
