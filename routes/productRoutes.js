@@ -19,10 +19,10 @@ const {validateCategoriesAndTax,categoriesAndTaxExistOrNot} = require("../helper
 
 
 //add a product
-router.post("/add",isAdmin,checkLogin,validateCategoriesAndTax,addProduct);
+router.post("/add",checkLogin,validateCategoriesAndTax,addProduct);
 
 //add multiple products
-router.post("/all",isAdmin,checkLogin,categoriesAndTaxExistOrNot,addAllProducts);
+router.post("/all",checkLogin,categoriesAndTaxExistOrNot,addAllProducts);
 
 //get a product
 router.post("/:id", getProductById);
