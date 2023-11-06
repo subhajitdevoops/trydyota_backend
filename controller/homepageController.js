@@ -111,9 +111,36 @@ const addHomePage = async (req, res) => {
     }
 };
 
+const deleteHomePage = async (req, res) => {
+  try {
+      const data=req.body;
+      if(data.id){
+          var result= await Homepage.deleteOne({ _id:data.id}).exec();
+          res.send({
+             success: true, 
+             message: "Sucessfully deleted!!!", 
+             result
+           });
+      }
+      else{
+          res.send({
+               success: true, 
+               message: "Please sent a valid id!!", 
+           });   
+      }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      sucess:false,
+      message: err.message,
+    });
+  }
+};
+
 
 
 module.exports = {
     getHomePage,
-    addHomePage
+    addHomePage,
+    deleteHomePage
 };
