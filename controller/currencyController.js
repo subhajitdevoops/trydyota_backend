@@ -3,13 +3,14 @@ const { mongo_connection } = require('../config/db'); // CCDev
 
 const addCurrency = async (req, res) => {
   try {
-   
+   console.log("hhhhhhhhhhhhhhhhhhhhhhh");
       const newCurrency = new Currencie(req.body);
       await newCurrency.save();
       res.send({
         message: 'Currency added successfully!',
       });
     } catch (err) {
+      console.log(err);
     res.status(500).send({
       message: err.message,
     });

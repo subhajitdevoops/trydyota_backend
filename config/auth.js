@@ -32,12 +32,34 @@ const tokenForVerify = (user) => {
   );
 };
 
+// const isAuth = async (req, res, next) => {
+//   const { authtoken } = req.headers;
+//   try {
+//     const token = authtoken.split(" ")[1];
+//     const decoded = jwt.verify(token, process.env.secretKey);
+//     req.user = decoded;
+//     next();
+//   } catch (err) {
+//     res.status(401).send({
+//       message: err.message,
+//     });
+//   }
+// };
+
 const isAuth = async (req, res, next) => {
-  const { authorization } = req.headers;
-  // console.log('authorization',authorization)
+  const { authtoken } = req.headers;
+  
+  console.log("authtoken:",authtoken);
+
+  if (!authtoken || !authtoken.startsWith("Bearer ")) {
+    return res.status(401).send({
+      message: "Authorization token is missing or invalid",
+    });
+  }
+
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const token = authtoken.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.secretKey);
     req.user = decoded;
     next();
   } catch (err) {
@@ -46,6 +68,8 @@ const isAuth = async (req, res, next) => {
     });
   }
 };
+
+
 
 const isAdmin = async (req, res, next) => {
   const admin = await Admin.findOne({ role: "Admin" });

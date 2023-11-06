@@ -45,7 +45,7 @@ app.use("/api/customer/", customerRoutes);
 app.use("/api/order/", isAuth, customerOrderRoutes);
 app.use("/api/attributes/", attributeRoutes);
 app.use("/api/setting/", settingRoutes);
-app.use("/api/currency/", isAuth, currencyRoutes);
+app.use("/api/currency/",currencyRoutes);
 app.use("/api/language/", languageRoutes);
 
 // Routes for admin dashboard
