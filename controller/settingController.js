@@ -19,9 +19,10 @@ const addGlobalSetting = async (req, res) => {
 const getGlobalSetting = async (req, res) => {
   try {
     const globalSetting = await Setting.findOne({ name: "globalSetting" });
-    res.send({
-      status:true,
-      "globalSetting":globalSetting});
+      res.send({
+          status:true,
+         "globalSetting":globalSetting
+      });
   } catch (err) {
     res.status(500).send({
       message: err.message,
