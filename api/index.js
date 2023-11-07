@@ -16,6 +16,11 @@ const attributeRoutes = require("../routes/attributeRoutes");
 const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
+const taxRoutes = require("../routes/taxRoutes");
+const homepageRoutes = require("../routes/homepageRoutes");
+const shippingRoutes = require("../routes/shippingRoutes");
+const brandCatalogRoutes = require("../routes/brandCatalogRoute");
+const productRequestRoutes=require("../routes/productRequestRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const {
   getGlobalSetting,
@@ -47,6 +52,11 @@ app.use("/api/attributes/", attributeRoutes);
 app.use("/api/setting/", settingRoutes);
 app.use("/api/currency/",currencyRoutes);
 app.use("/api/language/", languageRoutes);
+app.use("/api/tax/", taxRoutes);
+app.use("/api/homepage/", homepageRoutes);
+app.use("/api/shipping/", shippingRoutes);
+app.use("/api/brandcatalog/", brandCatalogRoutes);
+app.use("/api/productRequest/", productRequestRoutes);
 
 // Routes for admin dashboard
 app.use("/api/admin/", adminRoutes);
