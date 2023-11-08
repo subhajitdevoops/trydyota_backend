@@ -33,7 +33,15 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
-app.use(cors());
+
+// Enable CORS for specific origins
+app.use(
+  cors({
+    origin: "*", // Replace with your client's actual URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Root route
 app.get("/", (req, res) => {
@@ -84,7 +92,6 @@ app.use("/static", express.static("public"));
 
 const PORT = process.env.PORT || 5000;
 
-
 const server = app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
@@ -92,12 +99,9 @@ const server = app.listen(PORT, () => {
 // Set up socket
 const io = socket(server, {
   cors: {
-    origin: "*",
-    methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS"],
-    credentials: false,
-    transports: ["websocket", "polling"],
+    origin: "https://your-client-app.com", // Replace with your client's actual URL
+    methods: ["GET", "POST"],
   },
-  // allowEIO3: true,
 });
 
 io.on("connection", (socket) => {
