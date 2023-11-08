@@ -34,6 +34,7 @@ app.set("trust proxy", 1);
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
+
 app.use(cors());
 //==============Enable CORS===============//
 app.use(function (req, res, next) {
