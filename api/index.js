@@ -121,7 +121,7 @@ const server = app.listen(PORT, () => {
 // Set up socket
 const io = socket(server, {
   cors: {
-    origin: "https://your-client-app.com", // Replace with your client's actual URL
+    origin: "trydyota-backend.vercel.app", // Replace with your client's actual URL
     methods: ["GET", "POST"],
   },
 });
