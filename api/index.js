@@ -4,6 +4,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require("path");
 const socket = require("socket.io");
+const bodyParser = require("body-parser");
+
 
 const { connectDB } = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
