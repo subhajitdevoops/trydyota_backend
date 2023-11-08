@@ -46,6 +46,22 @@ app.use(function (req, res, next) {
   next();
 });
 
+//==============Parse JSON and URL-encoded bodies which are needed for REST API's===============//
+app.use(
+  bodyParser.json({
+    limit: "200000kb",
+    extended: true,
+    parameterLimit: 200000 * 100,
+  })
+);
+app.use(
+  bodyParser.urlencoded({
+    limit: "200000kb",
+    extended: true,
+    parameterLimit: 200000 * 100,
+  })
+);
+
 // Root route
 app.get("/", (req, res) => {
   console.log("jjj");
