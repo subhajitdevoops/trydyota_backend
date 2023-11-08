@@ -1,10 +1,20 @@
 const Order = require("../models/Order");
 
 const getAllOrders = async (req, res) => {
-  const { customerName, status, page, limit, day, startDate, endDate } =
-    req.query;
+  const {
+    day,
+    status,
+    page,
+    limit,
+    method,
+    endDate,
+    // download,
+    // sellFrom,
+    startDate,
+    customerName,
+  } = req.query;
 
-  // day count
+  //  day count
   let date = new Date();
   const today = date.toString();
   date.setDate(date.getDate() - Number(day));
@@ -12,11 +22,13 @@ const getAllOrders = async (req, res) => {
 
   const beforeToday = new Date();
   beforeToday.setDate(beforeToday.getDate() - 1);
-  const before_today = beforeToday.toString();
+  // const before_today = beforeToday.toString();
 
   const startDateData = new Date(startDate);
   startDateData.setDate(startDateData.getDate());
   const start_date = startDateData.toString();
+
+  // console.log(" start_date", start_date, endDate);
 
   const queryObject = {};
 
@@ -47,8 +59,11 @@ const getAllOrders = async (req, res) => {
   if (startDate && endDate) {
     queryObject.updatedAt = {
       $gt: start_date,
-      $lt: before_today,
+      $lt: endDate,
     };
+  }
+  if (method) {
+    queryObject.paymentMethod = { $regex: `${method}`, $options: "i" };
   }
 
   const pages = Number(page) || 1;
@@ -66,11 +81,41 @@ const getAllOrders = async (req, res) => {
       .skip(skip)
       .limit(limits);
 
+    let methodTotals = [];
+    if (startDate && endDate) {
+      // console.log("filter method total");
+      const filteredOrders = await Order.find(queryObject, {
+        _id: 1,
+        // subTotal: 1,
+        total: 1,
+
+        paymentMethod: 1,
+        // createdAt: 1,
+        updatedAt: 1,
+      }).sort({ updatedAt: -1 });
+      for (const order of filteredOrders) {
+        const { paymentMethod, total } = order;
+        const existPayment = methodTotals.find(
+          (item) => item.method === paymentMethod
+        );
+
+        if (existPayment) {
+          existPayment.total += total;
+        } else {
+          methodTotals.push({
+            method: paymentMethod,
+            total: total,
+          });
+        }
+      }
+    }
+
     res.send({
       orders,
       limits,
       pages,
       totalDoc,
+      methodTotals,
       // orderOverview,
     });
   } catch (err) {
@@ -256,6 +301,18 @@ const getDashboardAmount = async (req, res) => {
   // console.log('total')
   let week = new Date();
   week.setDate(week.getDate() - 10);
+
+  const currentDate = new Date();
+  currentDate.setDate(1); // Set the date to the first day of the current month
+  currentDate.setHours(0, 0, 0, 0); // Set the time to midnight
+
+  const lastMonthStartDate = new Date(currentDate); // Copy the current date
+  lastMonthStartDate.setMonth(currentDate.getMonth() - 1); // Subtract one month
+
+  let lastMonthEndDate = new Date(currentDate); // Copy the current date
+  lastMonthEndDate.setDate(0); // Set the date to the last day of the previous month
+  lastMonthEndDate.setHours(23, 59, 59, 999); // Set the time to the end of the day
+
   try {
     // total order amount
     const totalAmount = await Order.aggregate([
@@ -269,13 +326,27 @@ const getDashboardAmount = async (req, res) => {
       },
     ]);
     // console.log('totalAmount',totalAmount)
-    const thisMonthlyOrderAmount = await Order.aggregate([
+    const thisMonthOrderAmount = await Order.aggregate([
+      {
+        $project: {
+          year: { $year: "$updatedAt" },
+          month: { $month: "$updatedAt" },
+          total: 1,
+          subTotal: 1,
+          discount: 1,
+          updatedAt: 1,
+          createdAt: 1,
+          status: 1,
+        },
+      },
       {
         $match: {
           $or: [{ status: { $regex: "Delivered", $options: "i" } }],
-          $expr: {
-            $eq: [{ $month: "$updatedAt" }, { $month: new Date() }],
-          },
+          year: { $eq: new Date().getFullYear() },
+          month: { $eq: new Date().getMonth() + 1 },
+          // $expr: {
+          //   $eq: [{ $month: "$updatedAt" }, { $month: new Date() }],
+          // },
         },
       },
       {
@@ -287,6 +358,60 @@ const getDashboardAmount = async (req, res) => {
           },
           total: {
             $sum: "$total",
+          },
+          subTotal: {
+            $sum: "$subTotal",
+          },
+
+          discount: {
+            $sum: "$discount",
+          },
+        },
+      },
+      {
+        $sort: { _id: -1 },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    const lastMonthOrderAmount = await Order.aggregate([
+      {
+        $project: {
+          year: { $year: "$updatedAt" },
+          month: { $month: "$updatedAt" },
+          total: 1,
+          subTotal: 1,
+          discount: 1,
+          updatedAt: 1,
+          createdAt: 1,
+          status: 1,
+        },
+      },
+      {
+        $match: {
+          $or: [{ status: { $regex: "Delivered", $options: "i" } }],
+
+          updatedAt: { $gt: lastMonthStartDate, $lt: lastMonthEndDate },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            month: {
+              $month: "$updatedAt",
+            },
+          },
+          total: {
+            $sum: "$total",
+          },
+          subTotal: {
+            $sum: "$subTotal",
+          },
+
+          discount: {
+            $sum: "$discount",
           },
         },
       },
@@ -317,17 +442,14 @@ const getDashboardAmount = async (req, res) => {
         updatedAt: 1,
       }
     );
-    // let data = [];
-    // orderFilteringData.map((value) => {
-    //   return data.push(value._id);
-    // });
 
     res.send({
       totalAmount:
         totalAmount.length === 0
           ? 0
           : parseFloat(totalAmount[0].tAmount).toFixed(2),
-      thisMonthlyOrderAmount: thisMonthlyOrderAmount[0]?.total,
+      thisMonthlyOrderAmount: thisMonthOrderAmount[0]?.total,
+      lastMonthOrderAmount: lastMonthOrderAmount[0]?.total,
       ordersData: orderFilteringData,
     });
   } catch (err) {
