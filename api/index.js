@@ -36,8 +36,15 @@ app.set("trust proxy", 1);
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-app.use(cors({   origin: '*', }));
+app.use(cors(corsOptions));
+
+
 
 //==============Enable CORS===============//
 // app.use(function (req, res, next) {
