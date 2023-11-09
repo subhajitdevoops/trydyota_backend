@@ -37,7 +37,7 @@ app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
 
-app.use(cors());
+app.use(cors({   origin: '*', }));
 //==============Enable CORS===============//
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -121,8 +121,10 @@ const server = app.listen(PORT, () => {
 // Set up socket
 const io = socket(server, {
   cors: {
-    origin: "*", // Replace with your client's actual URL
-    methods: ["GET", "POST"],
+    origin: "*",
+    methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS"],
+    credentials: false,
+    transports: ["websocket", "polling"],
   },
 });
 
