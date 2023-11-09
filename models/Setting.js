@@ -35,7 +35,7 @@ const settingSchema = new mongoose.Schema({
       required: true,
     },
     receiptSize: {
-      type: Number,
+      type: String,
       required: true,
     },
     defaultCurrency: {
@@ -47,7 +47,7 @@ const settingSchema = new mongoose.Schema({
       required: true,
     },
     defaultDateFormat: {
-      type: Date,
+      type: String,
       required: true,
     },
   },
