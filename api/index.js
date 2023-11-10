@@ -38,10 +38,10 @@ app.use(helmet());
 
 app.use(cors({
   origin: '*', // Replace with your frontend URL
-  methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS"],
-  credentials: true,
-  transports: ["websocket", "polling"],
+  methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS","PUT"],
+  credentials: true, // If your frontend sends credentials (e.g., cookies)
 }));
+
 
 
 
