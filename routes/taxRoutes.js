@@ -10,13 +10,13 @@ const {
 const {isAdmin,checkLogin} = require("../helper/login");
 
 
-router.get('/',checkLogin,isAdmin, getTax);
+router.get('/',checkLogin, getTax);
 
-router.post('/',checkLogin,isAdmin, addTax);
+router.post('/',checkLogin, addTax);
 
-router.get('/taxbyid',checkLogin,isAdmin, getTaxById);
+router.get('/taxbyid',checkLogin, getTaxById);
 
-router.post('/deletetax',checkLogin,isAdmin, deleteTax);
+router.post('/deletetax',checkLogin, deleteTax);
 
 
 
