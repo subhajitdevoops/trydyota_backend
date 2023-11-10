@@ -29,54 +29,14 @@ const { isAuth, isAdmin } = require("../config/auth");
 
 connectDB();
 const app = express();
-
+app.use(cors());
 // We are using this for the express-rate-limit middleware
 app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
-app.use(cors());
 
-//==============Enable CORS===============//
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,x-client-key,x-client-token,x-client-secret,Authorization"
-  );
-  next();
-});
-
-
-
-// //==============Enable CORS===============//
-// // app.use(function (req, res, next) {
-// //   res.header("Access-Control-Allow-Origin", "*");
-// //   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-// //   res.header(
-// //     "Access-Control-Allow-Headers",
-// //     "Origin,X-Requested-With,Content-Type,Accept,x-client-key,x-client-token,x-client-secret,Authorization"
-// //   );
-// //   next();
-// // });
-
-// //==============Parse JSON and URL-encoded bodies which are needed for REST API's===============//
-// app.use(
-//   bodyParser.json({
-//     limit: "200000kb",
-//     extended: true,
-//     parameterLimit: 200000 * 100,
-//   })
-// );
-// app.use(
-//   bodyParser.urlencoded({
-//     limit: "200000kb",
-//     extended: true,
-//     parameterLimit: 200000 * 100,
-//   })
-// );
 
 // Root route
 app.get("/", (req, res) => {
