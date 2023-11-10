@@ -35,14 +35,14 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
-app.use(cors());
-// const corsOptions = {
-//   origin: '*',
-//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-// };
 
-// app.all('*', cors(corsOptions));
+app.use(cors({
+  origin: '*', // Replace with your frontend URL
+  methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS"],
+  credentials: true,
+  transports: ["websocket", "polling"],
+}));
+
 
 
 
@@ -137,7 +137,7 @@ const io = socket(server, {
 });
 
 io.on("connection", (socket) => {
-  // console.log(`Socket ${socket.id} connected!`);
+   console.log(`Socket ${socket.id} connected!`);
 
   socket.on("notification", async (data) => {
     // console.log("data", data);
