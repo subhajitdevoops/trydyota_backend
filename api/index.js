@@ -46,32 +46,32 @@ app.all('*', cors(corsOptions));
 
 
 
-//==============Enable CORS===============//
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin,X-Requested-With,Content-Type,Accept,x-client-key,x-client-token,x-client-secret,Authorization"
-//   );
-//   next();
-// });
+// //==============Enable CORS===============//
+// // app.use(function (req, res, next) {
+// //   res.header("Access-Control-Allow-Origin", "*");
+// //   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+// //   res.header(
+// //     "Access-Control-Allow-Headers",
+// //     "Origin,X-Requested-With,Content-Type,Accept,x-client-key,x-client-token,x-client-secret,Authorization"
+// //   );
+// //   next();
+// // });
 
-//==============Parse JSON and URL-encoded bodies which are needed for REST API's===============//
-app.use(
-  bodyParser.json({
-    limit: "200000kb",
-    extended: true,
-    parameterLimit: 200000 * 100,
-  })
-);
-app.use(
-  bodyParser.urlencoded({
-    limit: "200000kb",
-    extended: true,
-    parameterLimit: 200000 * 100,
-  })
-);
+// //==============Parse JSON and URL-encoded bodies which are needed for REST API's===============//
+// app.use(
+//   bodyParser.json({
+//     limit: "200000kb",
+//     extended: true,
+//     parameterLimit: 200000 * 100,
+//   })
+// );
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "200000kb",
+//     extended: true,
+//     parameterLimit: 200000 * 100,
+//   })
+// );
 
 // Root route
 app.get("/", (req, res) => {
@@ -99,18 +99,18 @@ app.use("/api/productRequest/", productRequestRoutes);
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
 
-// app.get("/", async (req, res, next) => {
-//   try {
-//     let html = fs.readFileSync(path.resolve(root, "index.html"), "utf-8");
+app.get("/", async (req, res, next) => {
+  try {
+    let html = fs.readFileSync(path.resolve(root, "index.html"), "utf-8");
 
-//     // Transform HTML using Vite plugins.
-//     html = await viteServer.transformIndexHtml(req.url, html);
+    // Transform HTML using Vite plugins.
+    html = await viteServer.transformIndexHtml(req.url, html);
 
-//     res.send(html);
-//   } catch (e) {
-//     return next(e);
-//   }
-// });
+    res.send(html);
+  } catch (e) {
+    return next(e);
+  }
+});
 
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
