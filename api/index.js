@@ -36,13 +36,18 @@ app.set("trust proxy", 1);
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
-app.use(cors({
-  origin: '*', // Replace with your frontend URL
-  methods: ["PUT", "GET", "POST", "DELETE", "PATCH", "OPTIONS","PUT"],
-  credentials: true, // If your frontend sends credentials (e.g., cookies)
-}));
+app.use(cors());
 
-
+//==============Enable CORS===============//
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,x-client-key,x-client-token,x-client-secret,Authorization"
+  );
+  next();
+});
 
 
 
