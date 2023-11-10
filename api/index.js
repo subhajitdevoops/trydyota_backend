@@ -35,14 +35,14 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
+app.use(cors());
+// const corsOptions = {
+//   origin: '*',
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
 
-const corsOptions = {
-  origin: '*',
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.all('*', cors(corsOptions));
+// app.all('*', cors(corsOptions));
 
 
 
@@ -99,18 +99,18 @@ app.use("/api/productRequest/", productRequestRoutes);
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
 
-app.get("/", async (req, res, next) => {
-  try {
-    let html = fs.readFileSync(path.resolve(root, "index.html"), "utf-8");
+// app.get("/", async (req, res, next) => {
+//   try {
+//     let html = fs.readFileSync(path.resolve(root, "index.html"), "utf-8");
 
-    // Transform HTML using Vite plugins.
-    html = await viteServer.transformIndexHtml(req.url, html);
+//     // Transform HTML using Vite plugins.
+//     html = await viteServer.transformIndexHtml(req.url, html);
 
-    res.send(html);
-  } catch (e) {
-    return next(e);
-  }
-});
+//     res.send(html);
+//   } catch (e) {
+//     return next(e);
+//   }
+// });
 
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
