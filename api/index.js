@@ -24,6 +24,8 @@ const homepageRoutes = require("../routes/homepageRoutes");
 const shippingRoutes = require("../routes/shippingRoutes");
 const brandCatalogRoutes = require("../routes/brandCatalogRoute");
 const productRequestRoutes = require("../routes/productRequestRoutes");
+const promotionRoutes = require("../routes/promotionRoutes");
+
 
 const { isAuth, isAdmin } = require("../config/auth");
 
@@ -35,8 +37,6 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
-
-
 
 // Root route
 app.get("/", (req, res) => {
@@ -59,6 +59,8 @@ app.use("/api/homepage/", homepageRoutes);
 app.use("/api/shipping/", shippingRoutes);
 app.use("/api/brandcatalog/", brandCatalogRoutes);
 app.use("/api/productRequest/", productRequestRoutes);
+app.use("/api/promotion/", promotionRoutes);
+
 
 // Routes for admin dashboard
 app.use("/api/admin/", adminRoutes);
