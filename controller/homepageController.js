@@ -1,8 +1,9 @@
 const Homepage = require("../models/homepage.js");
+const Product = require("../models/Product");
 
 
 
-const getHomePage = async (req, res) => {
+const getHomePageBanner = async (req, res) => {
     try {
 
             var data=req.query;
@@ -81,7 +82,7 @@ const getHomePage = async (req, res) => {
     }
 };
 
-const addHomePage = async (req, res) => {
+const addHomePageBanner = async (req, res) => {
     try {
         const data=req.body;
         if(data.id){
@@ -111,7 +112,7 @@ const addHomePage = async (req, res) => {
     }
 };
 
-const deleteHomePage = async (req, res) => {
+const deleteHomePageBanner = async (req, res) => {
   try {
       const data=req.body;
       if(data.id){
@@ -137,10 +138,177 @@ const deleteHomePage = async (req, res) => {
   }
 };
 
+const search = async (req, res) => {
+  try {
 
+          var data=req.query;
+          var prevPage;                                        
+          var nextPage;
+          var hasPrevPage;
+          var hasNextPage;
+          var limit = data.limit ? Number(data.limit) : 10;
+          var page = data.page ? Number(data.page) : 1;
+          
+          const searchQuery = req.query.searchQuery.toLowerCase();
+          
+
+          const searchResult =await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
+
+
+          var count=searchResult.length;
+
+          var totallength=Math.ceil(count/limit);
+
+          if(totallength==1 && page==totallength ){
+              prevPage=null;
+              hasPrevPage=false;
+              nextPage=null;
+              hasNextPage=false;
+          }
+          else if(page==1 && totallength>page) {
+                      prevPage=null;
+                      hasPrevPage=false;``
+                      nextPage=Number(page)+1; 
+                      hasNextPage=true;         
+          }
+          else if(page>1 && page==totallength){
+                  prevPage=Number(page)-1;
+                  hasPrevPage=true;
+                  nextPage=null;
+                  hasNextPage=false;       
+          }
+          else{
+                  prevPage=Number(page)-1;
+                  nextPage=Number(page)+1;
+                  hasPrevPage=true;
+                  hasNextPage=true;    
+          }
+
+          const  Pagination ={
+            "TotalDocuments":count,
+            "limit":limit,
+            "TotalPages":totallength,
+            "Current Page":page,
+            "PrevPage":prevPage,
+            "NextPage":nextPage,
+            "HasPrevPage":hasPrevPage,
+            "HasNextPage":hasNextPage,
+            "PagingCounter":page,        // consider index starting from 1,so pagingcounter will be same like index number //
+            
+            }
+
+          res.status(200).send({
+            success:true,
+            message:"Sucessfully fetch!",
+            searchResult,
+            Pagination
+          }) 
+
+    } catch (err) {
+      console.log(err),
+      res.status(500).send({
+       message: err.message,
+      });
+    }
+};
+
+const suggestions = async (req, res) => {
+  try {
+          var data=req.query;
+          var prevPage;                                        
+          var nextPage;
+          var hasPrevPage;
+          var hasNextPage;
+          var suggestion=[];
+          var limit = data.limit ? Number(data.limit) : 10;
+          var page = data.page ? Number(data.page) : 1;
+          
+          const searchQuery = req.query.searchQuery.toLowerCase();
+          console.log(searchQuery);
+
+          if (searchQuery.length >= 3){
+              console.log(1);
+              suggestion = await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).maxTimeMS(20000).exec();
+          }
+          if (searchQuery.length < 3){
+              console.log(2);
+              return(res.status(200).send({
+                success:true,
+                message:"Sucessfully fetch!",
+                suggestion:suggestion=[],
+              }))
+          }
+
+          if(suggestion.length>0){
+            console.log(3);
+
+            var count=suggestion.length;
+            var totallength=Math.ceil(count/limit);
+
+            if(totallength==1 && page==totallength ){
+                prevPage=null;
+                hasPrevPage=false;
+                nextPage=null;
+                hasNextPage=false;
+            }
+            else if(page==1 && totallength>page) {
+                        prevPage=null;
+                        hasPrevPage=false;``
+                        nextPage=Number(page)+1; 
+                        hasNextPage=true;         
+            }
+            else if(page>1 && page==totallength){
+                    prevPage=Number(page)-1;
+                    hasPrevPage=true;
+                    nextPage=null;
+                    hasNextPage=false;       
+            }
+            else{
+                    prevPage=Number(page)-1;
+                    nextPage=Number(page)+1;
+                    hasPrevPage=true;
+                    hasNextPage=true;    
+            }
+            const  Pagination ={
+              "TotalDocuments":count,
+              "limit":limit,
+              "TotalPages":totallength,
+              "Current Page":page,
+              "PrevPage":prevPage,
+              "NextPage":nextPage,
+              "HasPrevPage":hasPrevPage,
+              "HasNextPage":hasNextPage,
+              "PagingCounter":page,        // consider index starting from 1,so pagingcounter will be same like index number //
+              
+              }
+              return(res.status(200).send({
+              success:true,
+              message:"Sucessfully fetch!",
+              suggestion,
+              Pagination
+             }))
+          }
+          else{
+            console.log(4);
+            return(res.status(200).send({
+              success:true,
+              message:"Sucessfully fetch!",
+              suggestion:suggestion=[]
+            })) 
+          }
+
+    } catch (err) {
+      console.log(err),
+      res.status(500).send({
+       message: err.message,
+      });
+    }
+};
 
 module.exports = {
-    getHomePage,
-    addHomePage,
-    deleteHomePage
+    getHomePageBanner,
+    addHomePageBanner,
+    deleteHomePageBanner,
+    search,
+    suggestions
 };

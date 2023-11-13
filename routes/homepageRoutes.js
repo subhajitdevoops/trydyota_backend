@@ -1,20 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getHomePage,
-  addHomePage,
-  deleteHomePage
+  getHomePageBanner,
+  addHomePageBanner,
+  deleteHomePageBanner,
+  search,
+  suggestions
 } = require('../controller/homepageController');
 
 const {isAdmin,checkLogin} = require("../helper/login");
 
 
-router.get('/',checkLogin,isAdmin, getHomePage);
+router.get('/homepagebanner',checkLogin, getHomePageBanner);
 
-router.post('/',checkLogin,isAdmin, addHomePage);
+router.post('/homepagebanner',checkLogin,isAdmin, addHomePageBanner);
 
-router.post('/deleteHomePage',checkLogin,isAdmin, deleteHomePage);
+router.post('/deletehomepagebanner',checkLogin,isAdmin, deleteHomePageBanner);
 
+router.get('/search', search);
+
+router.get('/suggestion', suggestions);
 
 
 
