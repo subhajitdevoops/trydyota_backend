@@ -23,7 +23,7 @@ const {
 router.post("/verify-email", emailVerificationLimit, verifyEmailAddress);
 
 //register a user
-router.post("/register/:token", registerCustomer);
+router.post("/register", registerCustomer);
 
 //login a user
 router.post("/login", loginCustomer);

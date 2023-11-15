@@ -11,7 +11,7 @@ const {
 const {isAdmin,checkLogin} = require("../helper/login");
 
 
-router.get('/homepagebanner',checkLogin, getHomePageBanner);
+router.get('/homepagebanner', getHomePageBanner);
 
 router.post('/homepagebanner',checkLogin,isAdmin, addHomePageBanner);
 

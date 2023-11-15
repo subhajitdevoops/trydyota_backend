@@ -151,11 +151,11 @@ const search = async (req, res) => {
           
           const searchQuery = req.query.searchQuery.toLowerCase();
           
+          const productsearchResult =await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
+          const categorysearchResult =await Category.find({ name: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
 
-          const searchResult =await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
-
-
-          var count=searchResult.length;
+          var count=count+productsearchResult.length;
+              count=count+categorysearchResult.length;
 
           var totallength=Math.ceil(count/limit);
 
@@ -200,7 +200,8 @@ const search = async (req, res) => {
           res.status(200).send({
             success:true,
             message:"Sucessfully fetch!",
-            searchResult,
+            productsearchResult,
+            categorysearchResult,
             Pagination
           }) 
 
@@ -228,21 +229,25 @@ const suggestions = async (req, res) => {
 
           if (searchQuery.length >= 3){
               console.log(1);
-              suggestion = await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).maxTimeMS(20000).exec();
+              productsuggestion = await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).maxTimeMS(20000).exec();
+              categorysuggestion =await Category.find({ name: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
+
           }
           if (searchQuery.length < 3){
               console.log(2);
               return(res.status(200).send({
                 success:true,
                 message:"Sucessfully fetch!",
-                suggestion:suggestion=[],
+                productsuggestion:productsuggestion=[],
+                categorysuggestion:categorysuggestion=[],
               }))
           }
 
           if(suggestion.length>0){
             console.log(3);
 
-            var count=suggestion.length;
+            var count=count+productsuggestion.length;
+                count=count+categorysuggestion.length;
             var totallength=Math.ceil(count/limit);
 
             if(totallength==1 && page==totallength ){

@@ -18,6 +18,7 @@ const verifyEmailAddress = async (req, res) => {
       message: "This Email already Added!",
     });
   } else {
+    console.log(1);
     const token = tokenForVerify(req.body);
     const option = {
       name: req.body.name,
@@ -32,13 +33,13 @@ const verifyEmailAddress = async (req, res) => {
       html: customerRegisterBody(option),
     };
 
-    const message = "Please check your email to verify your account!";
+    const message = "Please check your email to verify your account!"+ "  " +option.token;
     sendEmail(body, res, message);
   }
 };
 
 const registerCustomer = async (req, res) => {
-  const token = req.params.token;
+  const token = req.body.token;
   const { name, email, password } = jwt.decode(token);
   const isAdded = await Customer.findOne({ email: email });
 
@@ -96,7 +97,6 @@ const addAllCustomers = async (req, res) => {
 const loginCustomer = async (req, res) => {
   try {
     const customer = await Customer.findOne({ email: req.body.registerEmail });
-
     if (
       customer &&
       customer.password &&
