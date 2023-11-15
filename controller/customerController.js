@@ -42,7 +42,7 @@ const registerCustomer = async (req, res) => {
   const token = req.body.token;
   const { name, email, password } = jwt.decode(token);
   const isAdded = await Customer.findOne({ email: email });
-
+   console.log("password",password);
   if (isAdded) {
     const token = signInToken(isAdded);
     return res.send({
