@@ -10,7 +10,7 @@ const {
 const {isAdmin,checkLogin,loginornot} = require("../helper/login");
 
 
-router.get('/',checkLogin,loginornot, getPromotionMethod);
+router.get('/',loginornot, getPromotionMethod);
 
 router.post('/',checkLogin,isAdmin, addPromotionMethod);
 
