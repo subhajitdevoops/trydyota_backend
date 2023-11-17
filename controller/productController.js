@@ -138,7 +138,7 @@ const updateProduct = async (req, res) => {
   // console.log('update product')
   // console.log('variant',req.body.variants)
   try {
-    const product = await Product.findById(req.params.id);
+    const product = req.body;
     // console.log("product", product);
 
     if (product) {
@@ -158,22 +158,27 @@ const updateProduct = async (req, res) => {
       // product.image = req.body.image;
       // product.tag = req.body.tag;
       // product.tax = req.body.tax;
-      product.title = req.body.title ? req.body.title : product.title;
-      product.description = req.body.description ? req.body.description : product.description;
-      product.productId = req.body.productId ? req.body.productId : product.productId;
-      product.sku = req.body.sku ? req.body.sku : product.sku;
-      product.barcode = req.body.barcode ? req.body.barcode : product.barcode;
-      product.slug = req.body.slug ? req.body.slug : product.slug;
-      product.categories = req.body.categories ? req.body.categories : product.categories;
-      product.category = req.body.category ? req.body.category : product.category;
-      product.show = req.body.show ? req.body.show : product.show;
-      product.isCombination = req.body.isCombination ? req.body.isCombination : product.isCombination;
-      product.variants = req.body.variants ? req.body.variants : product.variants;
-      product.stock = req.body.stock ? req.body.stock : product.stock;
-      product.prices = req.body.prices ? req.body.prices : product.prices;
-      product.image = req.body.image ? req.body.image : product.image;
-      product.tag = req.body.tag ? req.body.tag : product.tag;
-      product.tax = req.body.tax ? req.body.tax : product.tax;
+
+      ////////////////////////////////////////////////////////////////////////
+      // product.title = req.body.title ? req.body.title : product.title;
+      // product.description = req.body.description ? req.body.description : product.description;
+      // product.productId = req.body.productId ? req.body.productId : product.productId;
+      // product.sku = req.body.sku ? req.body.sku : product.sku;
+      // product.barcode = req.body.barcode ? req.body.barcode : product.barcode;
+      // product.slug = req.body.slug ? req.body.slug : product.slug;
+      // product.categories = req.body.categories ? req.body.categories : product.categories;
+      // product.category = req.body.category ? req.body.category : product.category;
+      // product.show = req.body.show ? req.body.show : product.show;
+      // product.isCombination = req.body.isCombination ? req.body.isCombination : product.isCombination;
+      // product.variants = req.body.variants ? req.body.variants : product.variants;
+      // product.stock = req.body.stock ? req.body.stock : product.stock;
+      // product.prices = req.body.prices ? req.body.prices : product.prices;
+      // product.image = req.body.image ? req.body.image : product.image;
+      // product.tag = req.body.tag ? req.body.tag : product.tag;
+      // product.tax = req.body.tax ? req.body.tax : product.tax;
+      ////////////////////////////////////////////////////////////////////////
+
+      
 
 
 
@@ -286,8 +291,6 @@ const updateStatus = (req, res) => {
     }
   );
 };
-
-
 
 
 const getShowingStoreProducts = async (req, res) => {
