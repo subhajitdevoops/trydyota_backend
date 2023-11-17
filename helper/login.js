@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const adminSchema = require('../models/Admin');
+const Customer = require('../models/Customer');
+
 const config = require("../config/auth.js");
 require('dotenv').config();
 const secretKey = process.env.JWT_SECRET;
@@ -35,7 +37,7 @@ const loginornot = async (req, res, next) => {
             if(req.headers.authtoken){
                 const token = req.headers.authtoken ;
                 const decoded = jwt.verify(token, secretKey);
-                const user= await adminSchema.findOne({email:decoded.email});
+                const user= await adminSchema.findOne({email:decoded.email}) || await Customer.findOne({email:decoded.email});
                 if(user){
                     req.query.userId=decoded._id;
                     req.query.name=decoded.name;
