@@ -12,7 +12,7 @@ const getPromotionMethod = async (req, res) => {
             var hasPrevPage;
             var hasNextPage;
 
-            var limit = data.limit ? Number(data.limit) : 10;
+            var limit = data.limit ? Number(data.limit) : 10000;
             var page = data.page ? Number(data.page) : 1;
 
             const PromotionDetailsdData =await Promotion.find().skip((page-1)*limit).limit(Number(limit)).exec();

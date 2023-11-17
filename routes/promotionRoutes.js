@@ -7,10 +7,10 @@ const {
   deletePromotionById
 } = require('../controller/promotionController.js');
 
-const {isAdmin,checkLogin} = require("../helper/login");
+const {isAdmin,checkLogin,loginornot} = require("../helper/login");
 
 
-router.get('/',checkLogin, getPromotionMethod);
+router.get('/',checkLogin,loginornot, getPromotionMethod);
 
 router.post('/',checkLogin,isAdmin, addPromotionMethod);
 
