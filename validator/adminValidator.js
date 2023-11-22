@@ -14,11 +14,7 @@ const regdetailsverify=async (req,res,next)=>{
                 name:Joi.string().required(),
                 email:Joi.string().email().required(),
                 password: Joi.string().required(),
-                confirmpassword: Joi.string().required(),
-                user_type:Joi.string().required(),
-                name:Joi.string(),
-                termandcondition:Joi.boolean().required(),
-                mobilenumber:Joi.number()
+                role:Joi.string().required(),
             }) 
             const value = await schema.validateAsync(req.body);
             next() 

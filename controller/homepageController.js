@@ -222,7 +222,6 @@ const suggestions = async (req, res) => {
           var nextPage;
           var hasPrevPage;
           var hasNextPage;
-          var suggestion=[];
           var limit = data.limit ? Number(data.limit) : 10;
           var page = data.page ? Number(data.page) : 1;
           
@@ -231,10 +230,14 @@ const suggestions = async (req, res) => {
 
           if (searchQuery.length >= 3){
               console.log(1);
-              productsuggestion = await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).maxTimeMS(20000).exec();
+              productsuggestion = await Product.find({ title: { $regex: new RegExp(searchQuery, 'i') } }).maxTimeMS(20000).skip((page-1)*limit).limit(Number(limit)).exec();
               categorysuggestion =await Category.find({ name: { $regex: new RegExp(searchQuery, 'i') } }).skip((page-1)*limit).limit(Number(limit)).exec();
-
+             
           }
+
+           console.log(productsuggestion);
+           console.log(categorysuggestion);
+
           if (searchQuery.length < 3){
               console.log(2);
               return(res.status(200).send({
@@ -245,7 +248,7 @@ const suggestions = async (req, res) => {
               }))
           }
 
-          if(suggestion.length>0){
+          if(productsuggestion.length>0 || categorysuggestion.length>0){
             console.log(3);
 
             var count=count+productsuggestion.length;
@@ -291,7 +294,8 @@ const suggestions = async (req, res) => {
               return(res.status(200).send({
               success:true,
               message:"Sucessfully fetch!",
-              suggestion,
+              productsuggestion,
+              categorysuggestion,
               Pagination
              }))
           }
@@ -300,7 +304,8 @@ const suggestions = async (req, res) => {
             return(res.status(200).send({
               success:true,
               message:"Sucessfully fetch!",
-              suggestion:suggestion=[]
+              productsuggestion,
+              categorysuggestion
             })) 
           }
 
