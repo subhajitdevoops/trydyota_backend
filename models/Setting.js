@@ -50,10 +50,17 @@ const settingSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    socialmedia: [{
-      type: String,
-      required: false,
-    }],
+    socialMedia: [{
+      name: {
+        type: String,
+        required: false,
+      },
+      medialink: {
+        type: String,
+        required: false,
+      },
+    
+    }]
   },
   {
     timestamps: true,
