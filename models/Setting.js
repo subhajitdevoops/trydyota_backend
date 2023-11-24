@@ -14,6 +14,10 @@ const settingSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    shopName: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,
