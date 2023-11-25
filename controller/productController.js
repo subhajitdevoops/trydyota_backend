@@ -1,6 +1,8 @@
 const Product = require("../models/Product");
 const mongoose = require("mongoose");
 const Category = require("../models/Category");
+const Tax = require("../models/tax");
+
 
 const addProduct = async (req, res) => {
   try {
@@ -99,15 +101,30 @@ const getAllProducts = async (req, res) => {
   try {
     const totalDoc = await Product.countDocuments(queryObject);
 
-    const products = await Product.find(queryObject)
-      .populate({ path: "category", select: "_id name" })
-      .populate({ path: "categories", select: "_id name" })
-      .sort(sortObject)
-      .skip(skip)
-      .limit(limits);
+    // const products = await Product.find(queryObject)
+    //   .populate({ path: "category", select: "_id name" })
+    //   .populate({ path: "categories", select: "_id name" })
+    //   .sort(sortObject)
+    //   .skip(skip)
+    //   .limit(limits);
+    // console.log(products);
+    const productsWithTaxDetails = await Product.find(queryObject)
+    .populate({ path: "category", select: "_id name" })
+    .populate({ path: "categories", select: "_id name" })
+    .populate({
+      path: "tax",
+      model: Tax,
+      select: "_id taxName type ammount",
+    })
+    .sort(sortObject)
+    .skip(skip)
+    .limit(limits);
+  
+  console.log(productsWithTaxDetails);
+  
 
     res.send({
-      products,
+      productsWithTaxDetails,
       totalDoc,
       limits,
       pages,

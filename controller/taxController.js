@@ -17,7 +17,7 @@ const getTax = async (req, res) => {
 
             const taxDetails =await Tax.find().skip((page-1)*limit).limit(Number(limit)).exec();
             
-
+            console.log(taxDetails);
             var countdata=await Tax.find().exec();
 
             var count=countdata.length;
