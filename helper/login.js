@@ -7,17 +7,19 @@ require('dotenv').config();
 const secretKey = process.env.JWT_SECRET;
 console.log(secretKey);
 const checkLogin = async (req, res, next) => {
-    console.log("checkLogin");
     try {
         
         const token = req.headers.authtoken ;
         const decoded = jwt.verify(token, secretKey);
         const user= await adminSchema.findOne({email:decoded.email});
+        console.log(user);
+        console.log(decoded);
         if(user){
             req.query.userId=decoded._id;
             req.query.name=decoded.name;
             req.body.email=decoded.email;
             req.query.email=decoded.email;
+            console.log("checkLogin");
             next();
         }
         else{
