@@ -8,19 +8,19 @@ const {
   suggestions
 } = require('../controller/homepageController');
 
-const {isAdmin,checkLogin} = require("../helper/login");
+const {isAdmin,checkLogin,loginornot} = require("../helper/login");
 const homepageValidation=require("../validator/homepageValidator")
 
 
-router.get('/homepagebanner',getHomePageBanner);
+router.get('/homepagebanner',loginornot,getHomePageBanner);
 
 router.post('/homepagebanner',checkLogin,isAdmin, homepageValidation,addHomePageBanner);
 
 router.post('/deletehomepagebanner',checkLogin,isAdmin, deleteHomePageBanner);
 
-router.get('/search', search);
+router.get('/search',loginornot, search);
 
-router.get('/suggestion', suggestions);
+router.get('/suggestion',loginornot, suggestions);
 
 
 
