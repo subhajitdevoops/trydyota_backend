@@ -344,11 +344,19 @@ const getShowingStoreProducts = async (req, res) => {
     const products = await Product.find(queryObject)
       .populate({ path: "category", select: "name _id" })
       .sort({ _id: -1 })
-      .limit(100);
+      .limit(100).populate({
+        path: "tax",
+        model: Tax,
+        select: "_id taxName type ammount",
+      })
 
     const relatedProduct = await Product.find({
       category: products[0]?.category,
-    }).populate({ path: "category", select: "_id name" });
+    }).populate({ path: "category", select: "_id name" }).populate({
+      path: "tax",
+      model: Tax,
+      select: "_id taxName type ammount",
+    });
 
     res.send({
       products,
