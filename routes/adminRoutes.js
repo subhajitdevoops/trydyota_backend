@@ -14,11 +14,13 @@ const {
 } = require("../controller/adminController");
 const { passwordVerificationLimit } = require("../lib/email-sender/sender");
 
+const {regdetailsverify,loginverify}=require("../validator/adminValidator")
+
 //register a staff
-router.post("/register", registerAdmin);
+router.post("/register", regdetailsverify,registerAdmin);
 
 //login a admin
-router.post("/login", loginAdmin);
+router.post("/login",loginverify, loginAdmin);
 
 //forget-password
 router.put("/forget-password", passwordVerificationLimit, forgetPassword);

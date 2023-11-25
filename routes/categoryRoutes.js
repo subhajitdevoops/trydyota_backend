@@ -15,10 +15,11 @@ const {
 
 } = require('../controller/categoryController');
 
+const categoryValidator=require("../validator/categoryValidator")
 
 
 //add a category
-router.post('/add', addCategory);
+router.post('/add',categoryValidator,addCategory);
 
 //add all category
 router.post('/add/all', addAllCategory);

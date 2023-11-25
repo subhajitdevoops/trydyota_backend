@@ -19,8 +19,10 @@ const {
   emailVerificationLimit,
 } = require("../lib/email-sender/sender");
 
+const customerValidator=require("../validator/customerValidator")
+
 //verify email
-router.post("/verify-email", emailVerificationLimit, verifyEmailAddress);
+router.post("/verify-email", emailVerificationLimit,customerValidator, verifyEmailAddress);
 
 //register a user
 router.post("/register", registerCustomer);

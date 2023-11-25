@@ -13,8 +13,10 @@ const {
   deleteManyCoupons,
 } = require('../controller/couponController');
 
+const cuponValidator=require("../validator/cuponValidator")
+
 //add a coupon
-router.post('/add', addCoupon);
+router.post('/add',cuponValidator, addCoupon);
 
 //add multiple coupon
 router.post('/add/all', addAllCoupon);

@@ -22,8 +22,11 @@ const {
   deleteManyChildAttribute,
 } = require('../controller/attributeController');
 
+const attributeValidator=require("../validator/attributeValidator")
+
+
 //add attribute
-router.post('/add', addAttribute);
+router.post('/add', attributeValidator,addAttribute);
 
 //add all attributes
 router.post('/add/all', addAllAttributes);

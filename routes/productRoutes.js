@@ -16,10 +16,11 @@ const {
 } = require("../controller/productController");
 const {isAdmin,checkLogin} = require("../helper/login");
 const {validateCategoriesAndTax,categoriesAndTaxExistOrNot} = require("../helper/validator");
+const productValidation=require("../validator/productValidator")
 
 
 //add a product
-router.post("/add",checkLogin,validateCategoriesAndTax,addProduct);
+router.post("/add",checkLogin,validateCategoriesAndTax,productValidation,addProduct);
 
 //add multiple products
 router.post("/all",checkLogin,categoriesAndTaxExistOrNot,addAllProducts);

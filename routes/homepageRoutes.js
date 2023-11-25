@@ -9,11 +9,12 @@ const {
 } = require('../controller/homepageController');
 
 const {isAdmin,checkLogin} = require("../helper/login");
+const homepageValidation=require("../validator/homepageValidator")
 
 
-router.get('/homepagebanner', getHomePageBanner);
+router.get('/homepagebanner',getHomePageBanner);
 
-router.post('/homepagebanner',checkLogin,isAdmin, addHomePageBanner);
+router.post('/homepagebanner',checkLogin,isAdmin, homepageValidation,addHomePageBanner);
 
 router.post('/deletehomepagebanner',checkLogin,isAdmin, deleteHomePageBanner);
 

@@ -15,8 +15,11 @@ const {
   deleteManyCurrency,
 } = require('../controller/currencyController');
 
+const currencyValidator=require("../validator/currencyValidator")
+
+
 //add a addCurrency
-router.post('/add', addCurrency);
+router.post('/add', currencyValidator,addCurrency);
 
 //add all Currency
 router.post('/add/all', addAllCurrency);
