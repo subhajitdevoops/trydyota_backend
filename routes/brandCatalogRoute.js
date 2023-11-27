@@ -7,14 +7,14 @@ const {
   deleteBrandCatalogById
 } = require('../controller/brandCatalogController.js');
 
-const {isAdmin,checkLogin} = require("../helper/login.js");
+const {isAdmin,checkLogin,loginornot} = require("../helper/login.js");
 
 
-router.get('/',checkLogin,isAdmin, getBrandCatalog);
+router.get('/',loginornot, getBrandCatalog);
 
 router.post('/',checkLogin,isAdmin, addBrandCatalog);
 
-router.get('/getBrandCatalogById',checkLogin,isAdmin, getBrandCatalogById);
+router.get('/getBrandCatalogById',loginornot, getBrandCatalogById);
 
 router.delete('/deleteBrandCatalogById/:id',checkLogin,isAdmin, deleteBrandCatalogById);
 
