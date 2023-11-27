@@ -8,6 +8,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      maxMessageSize: 1024 * 1024 * 16,
     });
     console.log("mongodb connection success!");
   } catch (err) {
