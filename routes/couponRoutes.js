@@ -16,7 +16,7 @@ const {
 const cuponValidator=require("../validator/cuponValidator")
 
 //add a coupon
-router.post('/add',cuponValidator, addCoupon);
+router.post('/add', addCoupon);
 
 //add multiple coupon
 router.post('/add/all', addAllCoupon);
