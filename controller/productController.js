@@ -109,7 +109,7 @@ const getAllProducts = async (req, res) => {
     //   .skip(skip)
     //   .limit(limits);
     // console.log(products);
-    const productsWithTaxDetails = await Product.find(queryObject)
+    const products = await Product.find(queryObject)
     .populate({ path: "category", select: "_id name" })
     .populate({ path: "categories", select: "_id name" })
     .populate({
@@ -121,11 +121,11 @@ const getAllProducts = async (req, res) => {
     .skip(skip)
     .limit(limits);
   
-  console.log(productsWithTaxDetails);
+  console.log(products);
   
 
     res.send({
-      productsWithTaxDetails,
+      products,
       totalDoc,
       limits,
       pages,
