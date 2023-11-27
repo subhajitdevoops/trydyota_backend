@@ -20,7 +20,7 @@ const productValidation=require("../validator/productValidator")
 
 
 //add a product
-router.post("/add",checkLogin,validateCategoriesAndTax,productValidation,addProduct);
+router.post("/add",checkLogin,validateCategoriesAndTax,addProduct);
 
 //add multiple products
 router.post("/all",checkLogin,categoriesAndTaxExistOrNot,addAllProducts);
