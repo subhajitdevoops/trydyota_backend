@@ -6,7 +6,6 @@ const getState= async (req, res) => {
     try {
 
       const stateDetails =await state.find().exec();
-      
       res.status(200).send({
         success:true,
         message:"Sucessfully fetch!",
