@@ -25,6 +25,7 @@ const shippingRoutes = require("../routes/shippingRoutes");
 const brandCatalogRoutes = require("../routes/brandCatalogRoute");
 const productRequestRoutes = require("../routes/productRequestRoutes");
 const promotionRoutes = require("../routes/promotionRoutes");
+const stateRoutes = require("../routes/stateRoute");
 
 
 const { isAuth, isAdmin } = require("../config/auth");
@@ -60,6 +61,8 @@ app.use("/api/shipping/", shippingRoutes);
 app.use("/api/brandcatalog/", brandCatalogRoutes);
 app.use("/api/productRequest/", productRequestRoutes);
 app.use("/api/promotion/", promotionRoutes);
+app.use("/api/state/", stateRoutes);
+
 
 
 // Routes for admin dashboard

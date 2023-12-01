@@ -31,9 +31,14 @@ const attributeData = require("../utils/attributes");
 const Setting = require("../models/Setting");
 const settingData = require("../utils/settings");
 
+const state = require("../models/state");
+const stateData = require("../utils/state");
+
 connectDB();
 const importData = async () => {
   try {
+
+    await state.insertMany(stateData);
     // await Language.deleteMany();
     // await Language.insertMany(languageData);
 

@@ -4,11 +4,9 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
-      useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      maxMessageSize: 1024 * 1024 * 16,
+      maxAllowedPacket: 100 * 1024 * 6666024
     });
     console.log("mongodb connection success!");
   } catch (err) {
@@ -19,3 +17,4 @@ const connectDB = async () => {
 module.exports = {
   connectDB,
 };
+

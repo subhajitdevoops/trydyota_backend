@@ -10,6 +10,18 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    HsnSacNumber: {
+      type: Number,
+      required: true,
+    },
+    askForPrice: {
+      type: Boolean,
+      required: false,
+    },
+    fewLeft: {
+      type: Boolean,
+      required: false,
+    },
     barcode: {
       type: String,
       required: false,
@@ -59,7 +71,6 @@ const productSchema = new mongoose.Schema(
       required: true,
     }],
     warrantyPeriods: {
-      type: {
         duration: {
           type: Number,
           required: true,
@@ -68,9 +79,7 @@ const productSchema = new mongoose.Schema(
           type: String,
           enum: ['months', 'years', 'days'],
           required: true,
-        },
-      },
-      required: true,
+         },
     },
     minimumOrderOfQuantity: {
       type: Number,
@@ -85,7 +94,6 @@ const productSchema = new mongoose.Schema(
         type:String,
         default:"Quantity wise"
       },
-      required: false,
     }],
     sales: {
       type: Number,
@@ -95,15 +103,15 @@ const productSchema = new mongoose.Schema(
     prices: {
       price: {
         type: Number,
-        required: true,
+        required: false,
       },
       salePrice: {
         type: Number,
-        required: true,
+        required: false,
       },
       discount: {
         type: Number,
-        required: true,
+        required: false,
       },
     },
     variants: [{}],
