@@ -140,14 +140,10 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    testCertification: [
-      {
-        medialink: {
+    dataSheet: {
           type: String,
           required: false,
-        },
-      },
-    ],
+    },
   },
   {
     timestamps: true,
