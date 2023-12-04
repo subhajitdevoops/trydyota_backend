@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const {
-   getAskForPrice,
-   askForPrice,
-   action
-} = require('../controller/askForPriceController.js');
+    getenquiry,
+    enquiry,
+    action
+} = require('../controller/enquiryController.js');
 
 const {checkLogin} = require("../helper/login.js");
 
 
-router.get('/',checkLogin, getAskForPrice);
+router.get('/',checkLogin, getenquiry);
 
-router.post('/',checkLogin, askForPrice);
+router.post('/',checkLogin, enquiry);
 
 router.post('/action',checkLogin, action);
-
-
 
 
 

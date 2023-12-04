@@ -46,7 +46,12 @@ const askForPriceSchema = new mongoose.Schema(
     message:{
         type: String,
         required: true,
-    }
+    },
+    status:{
+        type: String,
+        required: false,
+        default:"pending"
+    },
   },
   {
     timestamps: true,

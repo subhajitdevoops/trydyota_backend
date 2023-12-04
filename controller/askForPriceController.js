@@ -14,7 +14,6 @@ const askForPrice = async (req, res) => {
   }
 };
 
-
 const getAskForPrice = async (req, res) => {
     try {
       const getAskForPriceDetails = await askForPriceSchema.find().exec();
@@ -28,7 +27,21 @@ const getAskForPrice = async (req, res) => {
         message: `Error occur when adding attribute ${err.message}`,
       });
     }
-  };
+};
+
+const action = async (req, res) => {
+    try {
+      const askForPrice = await askForPriceSchema.updateOne({_id:req.body.id},{$set: {status: req.body.status}}).exec();
+      res.status(200).send({
+        message: "Successfully updated!!",
+      });
+    } catch (err) {
+        console.log(err);
+      res.status(500).send({
+        message: `Error occur when adding attribute ${err.message}`,
+      });
+    }
+};
 
 
-module.exports={askForPrice,getAskForPrice}
+module.exports={askForPrice,getAskForPrice,action}

@@ -27,6 +27,8 @@ const productRequestRoutes = require("../routes/productRequestRoutes");
 const promotionRoutes = require("../routes/promotionRoutes");
 const stateRoutes = require("../routes/stateRoute");
 const askForPriceRoutes = require("../routes/askForPriceRoutes");
+const enquiryRoutes = require("../routes/enquiryRoutes.js");
+
 
 
 const { isAuth, isAdmin } = require("../config/auth");
@@ -63,7 +65,10 @@ app.use("/api/brandcatalog/", brandCatalogRoutes);
 app.use("/api/productRequest/", productRequestRoutes);
 app.use("/api/promotion/", promotionRoutes);
 app.use("/api/state/", stateRoutes);
-app.use("/api/askForPrice/", askForPriceRoutes);
+app.use("/api/askforprice/", askForPriceRoutes);
+app.use("/api/enquiry/", enquiryRoutes);
+
+
 
 
 
