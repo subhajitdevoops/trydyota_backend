@@ -6,14 +6,14 @@ const {
     action
 } = require('../controller/enquiryController.js');
 
-const {checkLogin} = require("../helper/login.js");
+const {loginornot} = require("../helper/login.js");
 
 
-router.get('/',checkLogin, getenquiry);
+router.get('/',loginornot, getenquiry);
 
-router.post('/',checkLogin, enquiry);
+router.post('/',loginornot, enquiry);
 
-router.post('/action',checkLogin, action);
+router.post('/action',loginornot, action);
 
 
 

@@ -6,14 +6,14 @@ const {
    action
 } = require('../controller/askForPriceController.js');
 
-const {checkLogin} = require("../helper/login.js");
+const {loginornot} = require("../helper/login.js");
 
 
-router.get('/',checkLogin, getAskForPrice);
+router.get('/',loginornot, getAskForPrice);
 
-router.post('/',checkLogin, askForPrice);
+router.post('/',loginornot, askForPrice);
 
-router.post('/action',checkLogin, action);
+router.post('/action',loginornot, action);
 
 
 
