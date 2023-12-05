@@ -12,7 +12,7 @@ const addOrder = async (req, res) => {
   try {
     const newOrder = new Order({
       ...req.body,
-      user: req.user._id,
+      user: req.user,
     });
     const order = await newOrder.save();
     res.status(201).send(order);
