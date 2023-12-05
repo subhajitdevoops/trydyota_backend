@@ -4,7 +4,7 @@ const enquiry = async (req, res) => {
   try {
     const enquiryDetails = new enquirySchema(req.body);
     await enquiryDetails.save();
-    res.send({
+    res.status(200).send({
       message: "enquiry Submited Successfully!",
     });
   } catch (err) {

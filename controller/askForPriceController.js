@@ -4,7 +4,7 @@ const askForPrice = async (req, res) => {
   try {
     const newAttribute = new askForPriceSchema(req.body);
     await newAttribute.save();
-    res.send({
+    res.status(200).send({
       message: "Request Submited Successfully!",
     });
   } catch (err) {
