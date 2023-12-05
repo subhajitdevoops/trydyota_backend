@@ -61,6 +61,7 @@ const isAuth = async (req, res, next) => {
   try {
     const token = authtoken;
     const decoded = jwt.verify(token, secretKey);
+    console.log("==================",decoded);
     req.user = decoded._id;
     next();
   } catch (err) {
