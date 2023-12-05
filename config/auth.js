@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const secretKey = process.env.JWT_SECRET;
 const Admin = require("../models/Admin");
 
 const signInToken = (user) => {
@@ -59,7 +60,7 @@ const isAuth = async (req, res, next) => {
 
   try {
     const token = authtoken;
-    const decoded = jwt.verify(token, process.env.secretKey);
+    const decoded = jwt.verify(token, secretKey);
     req.user = decoded._id;
     next();
   } catch (err) {
