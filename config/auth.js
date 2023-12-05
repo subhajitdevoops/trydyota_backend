@@ -51,7 +51,7 @@ const isAuth = async (req, res, next) => {
   
   console.log("authtoken:",authtoken);
 
-  if (!authtoken || !authtoken.startsWith("Bearer ")) {
+  if (!authtoken ) {
     return res.status(401).send({
       message: "Authorization token is missing or invalid",
     });
