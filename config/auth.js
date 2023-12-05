@@ -58,7 +58,7 @@ const isAuth = async (req, res, next) => {
   }
 
   try {
-    const token = authtoken.split(" ")[1];
+    const token = authtoken;
     const decoded = jwt.verify(token, process.env.secretKey);
     req.user = decoded._id;
     next();
