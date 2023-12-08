@@ -159,11 +159,97 @@ const deleteTax = async (req, res) => {
   }
 };
 
+// const taxaccordingstate = async (req, res) => {
+//   try {
+//     const payload = req.body;
+
+//     const processedPayload = payload.map(item => {
+//       let taxes = item.tax.map(tax => {
+//         if (item.state.toLowerCase() === 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
+//           // If state is West Bengal and tax name contains 'gst', divide tax into sgst and cgst
+//           const sgstAmount = tax.amount / 2;
+//           const cgstAmount = tax.amount / 2;
+//           return [
+//             { type: 'percentage',taxName: 'SGST', amount: sgstAmount },
+//             { type: 'percentage',taxName: 'CGST', amount: cgstAmount }
+//           ];
+//         } else {
+//           // If state is different, make tax name igst
+//           return [{ type: 'percentage',taxName: 'IGST', amount: tax.amount }];
+//         }
+//       });
+
+//       // Flatten the taxes array
+//       taxes = taxes.flat();
+
+//       return { ...item, tax: taxes };
+//     });
+
+//     res.send({
+//       success: true,
+//       message: 'Tax calculation successful',
+//       result: processedPayload,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.send({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
+
+const taxaccordingstate = async (req, res) => {
+  try {
+    const payload = req.body;
+
+    const processedPayload = payload.map(item => {
+      let taxes = item.tax.map(tax => {
+        if (item.state.toLowerCase() === 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
+          // If state is West Bengal and tax name contains 'gst', divide tax into sgst and cgst
+          const sgstAmount = tax.amount / 2;
+          const cgstAmount = tax.amount / 2;
+          return [
+            { type: 'percentage', taxName: 'SGST', amount: sgstAmount },
+            { type: 'percentage', taxName: 'CGST', amount: cgstAmount }
+          ];
+        } else if (item.state.toLowerCase() !== 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
+          // If state is not West Bengal and tax name contains 'gst', change tax name to igst
+          return [{ type: 'percentage', taxName: 'IGST', amount: tax.amount }];
+        } else {
+          // If state is not West Bengal and tax name does not contain 'gst', keep it as it is
+          return [{ ...tax }];
+        }
+      });
+
+      // Flatten the taxes array and filter out null values
+      taxes = taxes.flat().filter(tax => tax !== null);
+
+      return { ...item, tax: taxes };
+    });
+
+    res.send({
+      success: true,
+      message: 'Tax calculation successful',
+      result: processedPayload,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+
+
 
 
 module.exports = {
     getTax,
     addTax,
     getTaxById,
-    deleteTax
+    deleteTax,
+    taxaccordingstate
 };

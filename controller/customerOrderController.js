@@ -85,14 +85,14 @@ const getOrderCustomer = async (req, res) => {
     const limits = Number(limit) || 8;
     const skip = (pages - 1) * limits;
 
-    const totalDoc = await Order.countDocuments({ user: req.user._id });
+    const totalDoc = await Order.countDocuments({ user: req.user });
 
     // total padding order count
     const totalPendingOrder = await Order.aggregate([
       {
         $match: {
           status: "Pending",
-          user: mongoose.Types.ObjectId(req.user._id),
+          user: mongoose.Types.ObjectId(req.user),
         },
       },
       {
@@ -106,12 +106,14 @@ const getOrderCustomer = async (req, res) => {
       },
     ]);
 
+  
+
     // total padding order count
     const totalProcessingOrder = await Order.aggregate([
       {
         $match: {
           status: "Processing",
-          user: mongoose.Types.ObjectId(req.user._id),
+          user: mongoose.Types.ObjectId(req.user),
         },
       },
       {
@@ -129,7 +131,7 @@ const getOrderCustomer = async (req, res) => {
       {
         $match: {
           status: "Delivered",
-          user: mongoose.Types.ObjectId(req.user._id),
+          user: mongoose.Types.ObjectId(req.user),
         },
       },
       {
@@ -146,7 +148,7 @@ const getOrderCustomer = async (req, res) => {
     // today order amount
 
     // query for orders
-    const orders = await Order.find({ user: req.user._id })
+    const orders = await Order.find({ user: req.user })
       .sort({ _id: -1 })
       .skip(skip)
       .limit(limits);

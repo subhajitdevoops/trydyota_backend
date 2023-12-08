@@ -4,10 +4,11 @@ const {
   getTax,
   addTax,
   getTaxById,
-  deleteTax
+  deleteTax,
+  taxaccordingstate
 } = require('../controller/taxController');
 
-const {isAdmin,checkLogin} = require("../helper/login");
+const {checkLogin,loginornot} = require("../helper/login");
 
 
 router.get('/',checkLogin, getTax);
@@ -18,6 +19,7 @@ router.get('/taxbyid',checkLogin, getTaxById);
 
 router.post('/deletetax',checkLogin, deleteTax);
 
+router.post('/taxaccordingstate',loginornot, taxaccordingstate);
 
 
 
