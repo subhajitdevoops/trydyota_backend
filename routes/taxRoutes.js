@@ -11,11 +11,11 @@ const {
 const {checkLogin,loginornot} = require("../helper/login");
 
 
-router.get('/',checkLogin, getTax);
+router.get('/',loginornot, getTax);
 
 router.post('/',checkLogin, addTax);
 
-router.get('/taxbyid',checkLogin, getTaxById);
+router.get('/taxbyid',loginornot, getTaxById);
 
 router.post('/deletetax',checkLogin, deleteTax);
 
