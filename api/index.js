@@ -36,6 +36,8 @@ const promotionRoutes = require("../routes/promotionRoutes");
 const stateRoutes = require("../routes/stateRoute");
 const askForPriceRoutes = require("../routes/askForPriceRoutes");
 const enquiryRoutes = require("../routes/enquiryRoutes.js");
+const aboutRoutes = require("../routes/aboutRoutes.js");
+
 
 
 const { isAuth, isAdmin } = require("../config/auth");
@@ -84,6 +86,7 @@ app.use("/api/promotion/", promotionRoutes);
 app.use("/api/state/", stateRoutes);
 app.use("/api/askforprice/", askForPriceRoutes);
 app.use("/api/enquiry/", enquiryRoutes);
+app.use("/api/about/", aboutRoutes);
 
 
 // Routes for admin dashboard
