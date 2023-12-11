@@ -7,7 +7,7 @@ const tax = new mongoose.Schema(
       required: true,
       unique:true
     },
-    type: {
+    taxType: {
       type: String,
       required: true,
       default: "percentage",
