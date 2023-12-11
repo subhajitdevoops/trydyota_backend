@@ -226,13 +226,6 @@ const taxaccordingstate = async (req, res) => {
 };
 
 
- 
-
-  
-
-
-
-
 
 module.exports = {
     getTax,
