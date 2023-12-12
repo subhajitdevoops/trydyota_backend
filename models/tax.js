@@ -16,7 +16,7 @@ const tax = new mongoose.Schema(
         "flatin",
       ],
     },
-    ammount: {
+    amount: {
         type: Number,
         currencySymbol:String,
         required: true,
