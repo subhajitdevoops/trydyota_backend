@@ -115,7 +115,7 @@ const getAllProducts = async (req, res) => {
     .populate({
       path: "tax",
       model: Tax,
-      select: "_id taxName type amount",
+      select: "_id taxName taxType amount",
     })
     .sort(sortObject)
     .skip(skip)
@@ -146,7 +146,7 @@ const getProductById = async (req, res) => {
       .populate({
         path: "tax",
         model: Tax,
-        select: "_id taxName type amount",
+        select: "_id taxName taxType amount",
       });
     res.send(product);
   } catch (err) {
@@ -348,7 +348,7 @@ const getShowingStoreProducts = async (req, res) => {
       .limit(100).populate({
         path: "tax",
         model: Tax,
-        select: "_id taxName type amount",
+        select: "_id taxName taxType amount",
       })
 
     const relatedProduct = await Product.find({
@@ -356,7 +356,7 @@ const getShowingStoreProducts = async (req, res) => {
     }).populate({ path: "category", select: "_id name" }).populate({
       path: "tax",
       model: Tax,
-      select: "_id taxName type amount",
+      select: "_id taxName taxType amount",
     });
 
     res.send({
