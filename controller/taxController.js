@@ -159,62 +159,126 @@ const deleteTax = async (req, res) => {
   }
 };
 
+// const taxaccordingstate = async (req, res) => {
+//   try {
+//     const payload = req.body;
+
+//     const processedPayload = payload.map(item => {
+//       let taxes = item.tax.map(tax => {
+//         if (item.state.toLowerCase() === 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
+//           // If state is West Bengal and tax name contains 'gst', divide tax into sgst and cgst
+//           const sgstAmount = tax.amount / 2;
+//           const cgstAmount = tax.amount / 2;
+//           return [
+//             { type: 'percentage', taxName: 'SGST', amount: sgstAmount },
+//             { type: 'percentage', taxName: 'CGST', amount: cgstAmount }
+//           ];
+//         } else if (item.state.toLowerCase() !== 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
+//           // If state is not West Bengal and tax name contains 'gst', change tax name to igst
+//           return [{ type: 'percentage', taxName: 'IGST', amount: tax.amount }];
+//         } else {
+//           // If state is not West Bengal and tax name does not contain 'gst', keep it as it is
+//           return [{ ...tax }];
+//         }
+//       });
+
+//       // Flatten the taxes array and filter out null values
+//       taxes = taxes.flat().filter(tax => tax !== null);
+
+//       return { ...item, tax: taxes };
+//     });
+
+
+    
+//     const processedPayload1 = processedPayload.map(item => {
+//       let taxes = item.tax.map(tax => {
+//         let taxAmount = (item.totalPrice * tax.amount) / 100;
+//         return {
+//           type: 'percentage',
+//           taxName: tax.taxName,
+//           amount: tax.amount,
+//           taxAmount: taxAmount
+//         };
+//       });
+
+//       const totalTaxAmount = taxes.reduce((acc, tax) => acc + tax.taxAmount, 0);
+//       const TotalPrice = item.totalPrice + totalTaxAmount;
+
+//       return { ...item, tax: taxes, totalTaxAmount: totalTaxAmount, TotalPrice: TotalPrice };
+//     });
+
+//     res.send({
+//       success: true,
+//       message: 'Tax calculation successful',
+//       result: processedPayload1,
+//     });
+
+
+
+
+//   } catch (err) {
+//     console.log(err);
+//     res.send({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
+
+
 const taxaccordingstate = async (req, res) => {
   try {
     const payload = req.body;
 
     const processedPayload = payload.map(item => {
-      let taxes = item.tax.map(tax => {
+      let taxesByOriginalName = {};
+      let totalTaxAmount = 0;
+
+      item.tax.forEach(tax => {
+        let currentTaxes = [];
+
         if (item.state.toLowerCase() === 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
           // If state is West Bengal and tax name contains 'gst', divide tax into sgst and cgst
           const sgstAmount = tax.amount / 2;
           const cgstAmount = tax.amount / 2;
-          return [
-            { type: 'percentage', taxName: 'SGST', amount: sgstAmount },
-            { type: 'percentage', taxName: 'CGST', amount: cgstAmount }
+          currentTaxes = [
+            { type: 'percentage', taxName: 'SGST', amount: sgstAmount, taxAmount: (item.totalPrice * sgstAmount) / 100 },
+            { type: 'percentage', taxName: 'CGST', amount: cgstAmount, taxAmount: (item.totalPrice * cgstAmount) / 100 }
           ];
         } else if (item.state.toLowerCase() !== 'westbengal' && tax.taxName.toLowerCase().includes('gst')) {
           // If state is not West Bengal and tax name contains 'gst', change tax name to igst
-          return [{ type: 'percentage', taxName: 'IGST', amount: tax.amount }];
+          currentTaxes = [
+            { type: 'percentage', taxName: 'IGST', amount: tax.amount, taxAmount: (item.totalPrice * tax.amount) / 100 }
+          ];
         } else {
           // If state is not West Bengal and tax name does not contain 'gst', keep it as it is
-          return [{ ...tax }];
+          currentTaxes = [
+            { type: 'percentage', taxName: tax.taxName, amount: tax.amount, taxAmount: (item.totalPrice * tax.amount) / 100 }
+          ];
         }
+
+        // Organize taxes by original tax names
+        if (!taxesByOriginalName[tax.taxName]) {
+          taxesByOriginalName[tax.taxName] = [];
+        }
+
+        taxesByOriginalName[tax.taxName] = taxesByOriginalName[tax.taxName].concat(currentTaxes);
+
+        // Calculate total tax amount for the current product
+        totalTaxAmount += currentTaxes.reduce((acc, currentTax) => acc + currentTax.taxAmount, 0);
       });
 
-      // Flatten the taxes array and filter out null values
-      taxes = taxes.flat().filter(tax => tax !== null);
+      // Calculate final price for the current product
+      const finalPrice = item.totalPrice + totalTaxAmount;
 
-      return { ...item, tax: taxes };
-    });
-
-
-    
-    const processedPayload1 = processedPayload.map(item => {
-      let taxes = item.tax.map(tax => {
-        let taxAmount = (item.price * tax.amount) / 100;
-        return {
-          type: 'percentage',
-          taxName: tax.taxName,
-          amount: tax.amount,
-          taxAmount: taxAmount
-        };
-      });
-
-      const totalTaxAmount = taxes.reduce((acc, tax) => acc + tax.taxAmount, 0);
-      const totalPrice = item.price + totalTaxAmount;
-
-      return { ...item, tax: taxes, totalTaxAmount: totalTaxAmount, totalPrice: totalPrice };
+      return { ...item, tax: taxesByOriginalName, totalTaxAmount: totalTaxAmount, finalPrice: finalPrice };
     });
 
     res.send({
       success: true,
       message: 'Tax calculation successful',
-      result: processedPayload1,
+      result: processedPayload,
     });
-
-
-
 
   } catch (err) {
     console.log(err);
@@ -224,6 +288,8 @@ const taxaccordingstate = async (req, res) => {
     });
   }
 };
+
+
 
 
 
