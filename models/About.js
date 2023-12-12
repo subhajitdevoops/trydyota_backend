@@ -19,12 +19,10 @@ const aboutSchema = new mongoose.Schema(
       required: true,
     },
     productImage: [{
-      mediaLink: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     }],
-    socialInteraction: {
+    socialInteraction: [{
       counting: {
         type: String,
         required: true,
@@ -37,7 +35,7 @@ const aboutSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-    },
+    }],
     briefDescription: {
       type: String,
       required: true,
