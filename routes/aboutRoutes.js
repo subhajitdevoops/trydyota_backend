@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {isAdmin} = require("../helper/login");
+const {isAdmin,loginornot} = require("../helper/login");
 
 const {
     about,getAbout,
@@ -9,7 +9,7 @@ const {
 
 router.post("/",isAdmin,about);
 
-router.get("/",isAdmin,getAbout);
+router.get("/",loginornot,getAbout);
 
 
 module.exports = router;
