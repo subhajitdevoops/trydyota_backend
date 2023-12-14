@@ -1,4 +1,6 @@
 const askForPriceSchema = require("../models/askForPrice");
+const Product = require("../models/Product");
+
 
 const askForPrice = async (req, res) => {
   try {
@@ -16,21 +18,45 @@ const askForPrice = async (req, res) => {
   }
 };
 
+// const getAskForPrice = async (req, res) => {
+//     try {
+//       const getAskForPriceDetails = await askForPriceSchema.find().exec();
+//       res.status(200).send({
+//         success:true,
+//         getAskForPriceDetails,
+//         message: "Successfully fetch!!",
+//       });
+//     } catch (err) {
+//         console.log(err);
+//       res.status(500).send({
+//         success:false,
+//         message: `Error occur when adding attribute ${err.message}`,
+//       });
+//     }
+// };
+
 const getAskForPrice = async (req, res) => {
-    try {
-      const getAskForPriceDetails = await askForPriceSchema.find().exec();
-      res.status(200).send({
-        success:true,
-        getAskForPriceDetails,
-        message: "Successfully fetch!!",
-      });
-    } catch (err) {
-        console.log(err);
-      res.status(500).send({
-        success:false,
-        message: `Error occur when adding attribute ${err.message}`,
-      });
-    }
+  try {
+    const getAskForPriceDetails = await askForPriceSchema
+      .find()
+      .populate({
+        path: "productId",
+        model: "Product", // Replace "Product" with the actual model name for your product schema
+      })
+      .exec();
+
+    res.status(200).send({
+      success: true,
+      getAskForPriceDetails,
+      message: "Successfully fetch!!",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: `Error occurred when fetching data: ${err.message}`,
+    });
+  }
 };
 
 const getAskForPriceById = async (req, res) => {
