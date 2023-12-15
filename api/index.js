@@ -53,7 +53,7 @@ app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
 
 console.log("1111");
-app.post("/auth", (req, res) => {
+app.get("/auth", (req, res) => {
   try {
     var authenticationParameters = imagekit.getAuthenticationParameters();
     res.send(authenticationParameters);
