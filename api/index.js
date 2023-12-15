@@ -55,7 +55,7 @@ app.get("/auth", (req, res) => {
     var authenticationParameters = imagekit.getAuthenticationParameters();
     res.send(authenticationParameters);
   } catch (err) {
-    console.log("error in auth imagekit!!!!!!!!!!!!!!!");
+    console.log("error in auth imagekit!!!!!!!!!!!!");
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
