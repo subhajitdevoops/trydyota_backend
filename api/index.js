@@ -37,6 +37,7 @@ const stateRoutes = require("../routes/stateRoute");
 const askForPriceRoutes = require("../routes/askForPriceRoutes");
 const enquiryRoutes = require("../routes/enquiryRoutes.js");
 const aboutRoutes = require("../routes/aboutRoutes.js");
+const contactRoutes = require("../routes/contactRoutes.js");
 
 
 
@@ -87,6 +88,7 @@ app.use("/api/state/", stateRoutes);
 app.use("/api/askforprice/", askForPriceRoutes);
 app.use("/api/enquiry/", enquiryRoutes);
 app.use("/api/about/", aboutRoutes);
+app.use("/api/contact/", contactRoutes);
 
 
 // Routes for admin dashboard
