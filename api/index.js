@@ -40,6 +40,7 @@ const aboutRoutes = require("../routes/aboutRoutes.js");
 const contactRoutes = require("../routes/contactRoutes.js");
 
 const { isAuth } = require("../config/auth");
+
 connectDB();
 const app = express();
 app.use(cors());
