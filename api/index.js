@@ -90,6 +90,7 @@ app.use("/api/enquiry/", enquiryRoutes);
 app.use("/api/about/", aboutRoutes);
 app.use("/api/contact/", contactRoutes);
 
+
 // Routes for admin dashboard
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
