@@ -60,6 +60,7 @@ app.get("/auth", (req, res) => {
   }
 });
 
+
 // Root route
 app.get("/", (req, res) => {
   res.send("App works properly!");
