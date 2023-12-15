@@ -39,8 +39,6 @@ const enquiryRoutes = require("../routes/enquiryRoutes.js");
 const aboutRoutes = require("../routes/aboutRoutes.js");
 const contactRoutes = require("../routes/contactRoutes.js");
 
-
-
 const { isAuth, isAdmin } = require("../config/auth");
 
 connectDB();
