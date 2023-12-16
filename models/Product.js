@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema(
     },
     HsnSacNumber: {
       type: Number,
-      required: true,
+      required: false,
     },
     askForPrice: {
       type: Boolean,
