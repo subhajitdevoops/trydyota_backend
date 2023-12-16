@@ -32,5 +32,21 @@ const getContact = async (req, res) => {
     }
 };
 
+const action = async (req, res) => {
+  try {
+    const askForPrice = await contactSchema.updateOne({_id:req.body.id},{$set: {status: req.body.status}}).exec();
+    res.status(200).send({
+      success:true,
+      message: "Successfully updated!!",
+    });
+  } catch (err) {
+      console.log(err);
+    res.status(500).send({
+      success:false,
+      message: `Error occur when adding attribute ${err.message}`,
+    });
+  }
+};
 
-module.exports ={contact,getContact}
+
+module.exports ={contact,getContact,action}

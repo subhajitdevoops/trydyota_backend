@@ -50,6 +50,7 @@ const askForPriceSchema = new mongoose.Schema(
     status:{
         type: String,
         required: false,
+        enum: ['pending','resolved','cancel','processing'],
         default:"pending"
     },
   },
