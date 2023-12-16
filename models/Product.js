@@ -43,13 +43,13 @@ const productSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true,
+        required: false,
       },
     ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required: false,
     },
     image: [{
       medialink: {
@@ -68,7 +68,7 @@ const productSchema = new mongoose.Schema(
     tax: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tax",
-      required: true,
+      required: false,
     }],
     warrantyPeriods: {
         duration: {
