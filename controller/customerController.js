@@ -18,7 +18,6 @@ const verifyEmailAddress = async (req, res) => {
       message: "This Email already Added!",
     });
   } else {
-    console.log(1);
     const token = tokenForVerify(req.body);
     const option = {
       name: req.body.name,
@@ -33,7 +32,7 @@ const verifyEmailAddress = async (req, res) => {
       html: customerRegisterBody(option),
     };
 
-    const message = "Please check your email to verify your account!"+ "  " +option.token;
+    const message = "Please check your email to verify your account!";
     sendEmail(body, res, message);
   }
 };
