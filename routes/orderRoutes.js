@@ -11,10 +11,14 @@ const {
   getDashboardRecentOrder,
   getDashboardCount,
   getDashboardAmount,
+  search,
 } = require("../controller/orderController");
 
 //get all orders
 router.get("/", getAllOrders);
+
+router.get("/search", search);
+
 
 // get dashboard orders data
 router.get("/dashboard", getDashboardOrders);

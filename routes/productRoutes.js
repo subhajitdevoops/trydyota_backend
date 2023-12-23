@@ -28,7 +28,6 @@ router.post("/all",checkLogin,categoriesAndTaxExistOrNot,addAllProducts);
 //get a product
 router.post("/:id",checkLogin, getProductById);
 
-
 //get showing products only
 router.get("/show", getShowingProducts);
 

@@ -3,7 +3,8 @@ const router = express.Router();
 const {
     getenquiry,
     enquiry,
-    action
+    action,
+    search
 } = require('../controller/enquiryController.js');
 
 const {loginornot} = require("../helper/login.js");
@@ -15,6 +16,7 @@ router.post('/',loginornot, enquiry);
 
 router.post('/action',loginornot, action);
 
+router.get("/search", search);
 
 
 

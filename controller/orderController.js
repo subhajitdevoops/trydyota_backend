@@ -42,10 +42,8 @@ const getAllOrders = async (req, res) => {
   }
 
   if (customerName) {
-    queryObject.$or = [
-      { "user_info.name": { $regex: `${customerName}`, $options: "i" } },
-      { invoice: { $regex: `${customerName}`, $options: "i" } },
-    ];
+    queryObject.$or =[ 
+     { "user_info.name": { $regex: `${customerName}`, $options: "i" }} ];
   }
 
   if (day) {
@@ -651,6 +649,102 @@ const getDashboardOrders = async (req, res) => {
   }
 };
 
+
+const search = async (req, res) => {
+  try {
+  const data=req.query;
+  var limit = data.limit ? Number(data.limit) : 2;
+  var page = data.page ? Number(data.page) : 1;
+  var name = data.name || "";
+  var status = data.status || "";
+  var startDate = data.startDate || "";
+  var endDate = data.endDate || "";
+  var stuffRole = data.stuffRole || "";
+  var orderlimit = data.orderlimit || "";
+  
+  let query = {};
+
+  if (name) {
+    query["user_info.name"] = { $regex: new RegExp(name, "i") };
+  }
+
+  if (status) {
+    query["status"] = status;
+  }
+
+  if (orderlimit) {
+    query["subTotal"] = { $gte: orderlimit };
+  }
+
+  if (startDate) {
+    query["createdAt"] = { $gte: new Date(startDate) };
+  }
+
+  if (endDate) {
+    query["createdAt"] = { ...query["createdAt"], $lte: new Date(endDate) };
+  }
+
+  if (stuffRole) {
+    query["user_info.stuffRole"] = stuffRole;
+  }
+
+      const filteredOrders = await Order.find(query).skip((page - 1) * limit).exec();
+
+      var count=filteredOrders.length;
+      var totallength=Math.ceil(count/limit);
+
+      if(totallength==1 && page==totallength ){
+          prevPage=null;
+          hasPrevPage=false;
+          nextPage=null;
+          hasNextPage=false; 
+      }
+      else if(page==1 && totallength>page) {
+                  prevPage=null;
+                  hasPrevPage=false;``
+                  nextPage=Number(page)+1; 
+                  hasNextPage=true;
+      }
+      else if(page>1 && page==totallength){
+              prevPage=Number(page)-1;
+              hasPrevPage=true;
+              nextPage=null;
+              hasNextPage=false;
+      }
+      else{   prevPage=Number(page)-1;
+              nextPage=Number(page)+1;
+              hasPrevPage=true;
+              hasNextPage=true;
+      }
+
+      const  Pagination ={
+        "TotalDocuments":count,
+        "limit":limit,
+        "TotalPages":totallength,
+        "Current Page":page,
+        "PrevPage":prevPage,
+        "NextPage":nextPage,
+        "HasPrevPage":hasPrevPage,
+        "HasNextPage":hasNextPage,
+        "PagingCounter":page,      
+      };
+
+      res.send({
+        status:true,
+        message:"Order fetch Sucessfully!!",
+        filteredOrders,
+        Pagination
+      });
+
+  } 
+  catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  };
+}
+
+
 module.exports = {
   getAllOrders,
   getOrderById,
@@ -662,4 +756,5 @@ module.exports = {
   getDashboardRecentOrder,
   getDashboardCount,
   getDashboardAmount,
+  search
 };

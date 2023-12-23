@@ -4,12 +4,8 @@ const jwt = require("jsonwebtoken");
 const Customer = require("../models/Customer");
 const { signInToken, tokenForVerify } = require("../config/auth");
 const { sendEmail } = require("../lib/email-sender/sender");
-const {
-  customerRegisterBody,
-} = require("../lib/email-sender/templates/register");
-const {
-  forgetPasswordEmailBody,
-} = require("../lib/email-sender/templates/forget-password");
+const {customerRegisterBody} = require("../lib/email-sender/templates/register");
+const {forgetPasswordEmailBody} = require("../lib/email-sender/templates/forget-password");
 
 const verifyEmailAddress = async (req, res) => {
   const isAdded = await Customer.findOne({ email: req.body.email });
@@ -244,12 +240,64 @@ const signUpWithProvider = async (req, res) => {
 
 const getAllCustomers = async (req, res) => {
   try {
-    const users = await Customer.find({}).sort({ _id: -1 });
-    res.send(users);
+    const data = req.query;
+    const limit = data.limit ? Number(data.limit) : 2;
+    const page = data.page ? Number(data.page) : 1;
+    // const searchQuery = data.searchQuery || "";
+    // const stuffRole = data.stuffRole || "";
+
+    // let query = {};
+
+    // if (searchQuery) {
+    //   query={'$match':
+    //     {$or: [{'name': searchQuery},
+    //             {'email': searchQuery}]
+    //     }}
+    // }
+    // console.log(query);
+    // if (stuffRole) {
+    //   query["stuffRole"] = stuffRole;
+    // }
+
+    const users = await Customer.find()
+      .sort({ _id: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec();
+
+    const allData = await Customer.find().exec();
+
+    const count = allData.length;
+    const totallength = Math.ceil(count / limit);
+
+    const prevPage = page > 1 ? page - 1 : null;
+    const nextPage = page < totallength ? page + 1 : null;
+    const hasPrevPage = page > 1;
+    const hasNextPage = page < totallength;
+
+    const pagination = {
+      TotalDocuments: count,
+      limit,
+      TotalPages: totallength,
+      CurrentPage: page,
+      PrevPage: prevPage,
+      NextPage: nextPage,
+      HasPrevPage: hasPrevPage,
+      HasNextPage: hasNextPage,
+      PagingCounter: page,
+    };
+
+    res.send({
+      status: true,
+      message: "Successfully fetch!!",
+      users,
+      Pagination: pagination,
+    });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
 };
+
 
 const getCustomerById = async (req, res) => {
   try {
