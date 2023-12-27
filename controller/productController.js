@@ -141,8 +141,8 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
-      .populate({ path: "category", select: "_id, name" })
-      .populate({ path: "categories", select: "_id name" })
+      .populate({ path: "category"})
+      .populate({ path: "categories"})
       .populate({
         path: "tax",
         model: Tax,
