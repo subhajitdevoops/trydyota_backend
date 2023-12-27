@@ -77,7 +77,7 @@ const getenquiry = async (req, res) => {
       };
 
       res.send({
-        status:true,
+        success:true,
         message: "Successfully fetch!!",
         enquiryDetails,
         Pagination
